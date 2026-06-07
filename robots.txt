@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /config/
+Disallow: /core/
+Disallow: /includes/
+Disallow: /api/
+
+# Sitemap — generat dinamic (robots.php + .htaccess)
+Sitemap: https://visio.page.gd/sitemap.xml
