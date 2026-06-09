@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
     'app_name'     => 'Visio',
-    'app_url'      => 'https://visio.page.gd/', // gol = detectare automată din request
+    'app_url'      => 'https://visio.md/', // gol = detectare automată din request
     'base_path'    => '', // null = auto | '' = rădăcina domeniului | '/Visio' = subfolder
     'default_lang' => 'ro',
     'languages'    => ['ro', 'en', 'ru'],
