@@ -30,6 +30,10 @@ foreach (app_config('languages', ['ro', 'en', 'ru']) as $code) {
         $hreflangUrls[$code] = home_url($code);
     }
 }
+$isHomePage = empty($_GET['slug']);
+$navHash = function (string $section) use ($isHomePage): string {
+    return $isHomePage ? '#' . $section : home_href() . '#' . $section;
+};
 ?>
 <!DOCTYPE html>
 <html lang="<?= e($lang) ?>">
@@ -44,17 +48,13 @@ foreach (app_config('languages', ['ro', 'en', 'ru']) as $code) {
         var theme = 'light';
         try {
             var stored = localStorage.getItem(key);
-            if (stored === 'dark' || stored === 'light') {
-                theme = stored;
-            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                theme = 'dark';
-            }
+            if (stored === 'dark' || stored === 'light') theme = stored;
         } catch (e) {}
         document.documentElement.setAttribute('data-theme', theme);
     })();
     </script>
     <style>
-        html, body { background-color: #fafafa; color-scheme: light; }
+        html, body { background-color: #f8f9fc; color-scheme: light; }
         html[data-theme="dark"], html[data-theme="dark"] body { background-color: #0a0a0f; color-scheme: dark; }
     </style>
     <title><?= e($pageTitle) ?></title>
@@ -101,6 +101,7 @@ foreach (app_config('languages', ['ro', 'en', 'ru']) as $code) {
     <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
     <div class="cursor-glow" aria-hidden="true"></div>
     <canvas id="particles" class="particles-canvas" aria-hidden="true"></canvas>
+    <canvas id="waveCanvas" class="wave-canvas" aria-hidden="true"></canvas>
 
     <header class="site-header" id="siteHeader">
         <div class="header-inner container">
@@ -111,23 +112,40 @@ foreach (app_config('languages', ['ro', 'en', 'ru']) as $code) {
 
             <nav class="nav-pill" aria-label="Main">
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="<?= home_href() ?>#home" class="nav-link" data-section="home"><?= e(__('nav_home')) ?></a></li>
-                    <li><a href="<?= home_href() ?>#about" class="nav-link" data-section="about"><?= e(__('nav_about')) ?></a></li>
-                    <li><a href="<?= home_href() ?>#services" class="nav-link" data-section="services"><?= e(__('nav_services')) ?></a></li>
-                    <li><a href="<?= home_href() ?>#projects" class="nav-link" data-section="projects"><?= e(__('nav_projects')) ?></a></li>
-                    <li><a href="<?= home_href() ?>#contact" class="nav-link nav-link--cta" data-section="contact"><?= e(__('nav_contact')) ?></a></li>
+                    <li><a href="<?= e($navHash('home')) ?>" class="nav-link" data-section="home"><?= e(__('nav_home')) ?></a></li>
+                    <li><a href="<?= e($navHash('about')) ?>" class="nav-link" data-section="about"><?= e(__('nav_about')) ?></a></li>
+                    <li><a href="<?= e($navHash('services')) ?>" class="nav-link" data-section="services"><?= e(__('nav_services')) ?></a></li>
+                    <li><a href="<?= e($navHash('projects')) ?>" class="nav-link" data-section="projects"><?= e(__('nav_projects')) ?></a></li>
+                    <li><a href="<?= e($navHash('contact')) ?>" class="nav-link nav-link--cta" data-section="contact"><?= e(__('nav_contact')) ?></a></li>
                 </ul>
             </nav>
 
             <div class="header-actions">
-                <div class="lang-switcher lang-switcher--pill">
-                    <?php foreach (app_config('languages') as $code):
-                        $href = !empty($_GET['slug'])
-                            ? project_href((string) $_GET['slug'], $code)
-                            : home_href($code);
-                    ?>
-                    <a href="<?= e($href) ?>" class="lang-btn <?= $lang === $code ? 'active' : '' ?>" hreflang="<?= e($code) ?>"><?= strtoupper($code) ?></a>
-                    <?php endforeach; ?>
+                <div class="lang-switcher" id="langSwitcher">
+                    <button type="button" class="lang-switcher__trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="<?= e(__('lang_switch')) ?>">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        <span class="lang-switcher__current"><?= strtoupper($lang) ?></span>
+                        <svg class="lang-switcher__chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <ul class="lang-switcher__menu" role="listbox" id="langMenu" hidden>
+                        <?php
+                        $langFlags = ['ro' => '🇷🇴', 'en' => '🇬🇧', 'ru' => '🇷🇺'];
+                        foreach (app_config('languages') as $code):
+                            $href = !empty($_GET['slug'])
+                                ? project_href((string) $_GET['slug'], $code)
+                                : home_href($code);
+                            $hash = empty($_GET['slug']) ? (parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_FRAGMENT) ?: '') : '';
+                            if ($hash) $href .= '#' . $hash;
+                        ?>
+                        <li role="option" aria-selected="<?= $lang === $code ? 'true' : 'false' ?>">
+                            <a href="<?= e($href) ?>" class="lang-switcher__option <?= $lang === $code ? 'is-active' : '' ?>" hreflang="<?= e($code) ?>" lang="<?= e($code) ?>">
+                                <span class="lang-switcher__flag" aria-hidden="true"><?= $langFlags[$code] ?? '' ?></span>
+                                <span class="lang-switcher__label"><?= e(__('lang_' . $code)) ?></span>
+                                <span class="lang-switcher__code"><?= strtoupper($code) ?></span>
+                            </a>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
                 </div>
                 <button class="theme-toggle" id="themeToggle" aria-label="<?= e(__('theme_dark')) ?>">
                     <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>

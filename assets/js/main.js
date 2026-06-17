@@ -10,7 +10,7 @@
         gsap.registerPlugin(ScrollTrigger);
 
         gsap.from('.hero-badge', { opacity: 0, y: 30, duration: 0.8, delay: 0.15, ease: 'power3.out' });
-        gsap.from('.hero-title .hero-line', { opacity: 0, y: 60, duration: 1, delay: 0.3, stagger: 0.12, ease: 'power4.out' });
+        gsap.from('.hero-line', { opacity: 0, y: 60, duration: 1, delay: 0.3, stagger: 0.12, ease: 'power4.out' });
         gsap.from('.hero-subtitle', { opacity: 0, y: 30, duration: 0.8, delay: 0.55, ease: 'power3.out' });
         gsap.from('.hero-actions .btn', { opacity: 0, y: 24, duration: 0.7, delay: 0.75, stagger: 0.1, ease: 'back.out(1.4)' });
 
@@ -41,6 +41,20 @@
             });
         });
 
+        gsap.utils.toArray('.about-feature').forEach(function (card, i) {
+            gsap.from(card, {
+                scrollTrigger: { trigger: card, start: 'top 90%' },
+                opacity: 0, y: 30, duration: 0.6, delay: i * 0.08, ease: 'power2.out',
+            });
+        });
+
+        gsap.utils.toArray('.tech-chip').forEach(function (chip, i) {
+            gsap.from(chip, {
+                scrollTrigger: { trigger: chip, start: 'top 95%' },
+                opacity: 0, scale: 0.85, duration: 0.4, delay: (i % 8) * 0.04, ease: 'back.out(2)',
+            });
+        });
+
         gsap.utils.toArray('.project-card').forEach(function (card, i) {
             gsap.from(card, {
                 scrollTrigger: { trigger: card, start: 'top 92%' },
@@ -49,6 +63,11 @@
             var imgWrap = card.querySelector('.project-card-image');
             if (imgWrap) initTilt(imgWrap);
         });
+
+        var marquee = document.querySelector('.tech-marquee__track');
+        if (marquee && typeof gsap !== 'undefined') {
+            gsap.to(marquee, { xPercent: -50, duration: 28, repeat: -1, ease: 'none' });
+        }
 
         gsap.from('.about-visual', { scrollTrigger: { trigger: '.about-grid', start: 'top 78%' }, opacity: 0, x: -50, duration: 1, ease: 'power3.out' });
         gsap.from('.about-text', { scrollTrigger: { trigger: '.about-grid', start: 'top 78%' }, opacity: 0, x: 50, duration: 1, ease: 'power3.out' });
@@ -95,7 +114,114 @@
         initContactForm();
         initProjectHero();
         initScrollSpy();
+        initAnchorNav();
+        initLangSwitcher();
     });
+
+    function getHeaderOffset() {
+        var header = document.getElementById('siteHeader');
+        return header ? header.offsetHeight + 24 : 110;
+    }
+
+    function scrollToSection(id, behavior) {
+        var el = document.getElementById(id);
+        if (!el) return false;
+        var top = el.getBoundingClientRect().top + window.scrollY - getHeaderOffset();
+        window.scrollTo({ top: Math.max(0, top), behavior: behavior || 'smooth' });
+        return true;
+    }
+
+    function initAnchorNav() {
+        function handleHashScroll(behavior) {
+            var hash = (window.location.hash || '').replace('#', '');
+            if (!hash) return;
+            scrollToSection(hash, behavior || 'auto');
+        }
+
+        handleHashScroll('auto');
+        window.addEventListener('load', function () { handleHashScroll('auto'); });
+        setTimeout(function () { handleHashScroll('auto'); }, 400);
+        setTimeout(function () { handleHashScroll('auto'); }, 900);
+
+        window.addEventListener('hashchange', function () {
+            var hash = (window.location.hash || '').replace('#', '');
+            if (hash) scrollToSection(hash, 'smooth');
+        });
+
+        document.addEventListener('click', function (e) {
+            var link = e.target.closest('a[href*="#"]');
+            if (!link) return;
+            var href = link.getAttribute('href');
+            if (!href || href === '#') return;
+
+            function activateNav(targetId) {
+                var navLinks = document.querySelectorAll('.nav-link[data-section]');
+                navLinks.forEach(function (nl) {
+                    nl.classList.toggle('is-active', nl.dataset.section === targetId);
+                });
+                var navPill = document.querySelector('.nav-pill');
+                if (navPill) navPill.classList.remove('open');
+            }
+
+            if (href.charAt(0) === '#') {
+                var pureId = href.slice(1);
+                if (!document.getElementById(pureId)) return;
+                e.preventDefault();
+                history.pushState(null, '', href);
+                scrollToSection(pureId, 'smooth');
+                activateNav(pureId);
+                return;
+            }
+
+            var url;
+            try { url = new URL(href, window.location.href); } catch (err) { return; }
+            if (!url.hash || url.hash === '#') return;
+
+            var targetId = url.hash.slice(1);
+            var currentPath = window.location.pathname.replace(/\/+$/, '') || '/';
+            var linkPath = url.pathname.replace(/\/+$/, '') || '/';
+
+            var samePage = linkPath === currentPath
+                || (linkPath === '/ro' && currentPath === '/')
+                || (linkPath === '/ro' && currentPath.startsWith('/ro'));
+
+            if (!samePage) return;
+
+            var target = document.getElementById(targetId);
+            if (!target) return;
+
+            e.preventDefault();
+            if (linkPath !== currentPath && linkPath !== '/') {
+                window.location.href = url.pathname + url.hash;
+                return;
+            }
+            history.pushState(null, '', url.pathname + url.hash);
+            scrollToSection(targetId, 'smooth');
+            activateNav(targetId);
+        });
+    }
+
+    function initLangSwitcher() {
+        var switcher = document.getElementById('langSwitcher');
+        var trigger = document.getElementById('langTrigger');
+        var menu = document.getElementById('langMenu');
+        if (!switcher || !trigger || !menu) return;
+
+        trigger.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var open = switcher.classList.toggle('is-open');
+            menu.hidden = !open;
+            trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+
+        document.addEventListener('click', function () {
+            switcher.classList.remove('is-open');
+            menu.hidden = true;
+            trigger.setAttribute('aria-expanded', 'false');
+        });
+
+        menu.addEventListener('click', function (e) { e.stopPropagation(); });
+    }
 
     function initHeader() {
         var header = document.getElementById('siteHeader');

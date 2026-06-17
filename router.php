@@ -59,7 +59,7 @@ if (preg_match('#^/admin(?:/(.+))?$#', $uri, $m)) {
 
 // ── Rădăcină → RO ────────────────────────────────────────────
 if ($uri === '/') {
-    header('Location: /ro', true, 302);
+    header('Location: /ro/', true, 302);
     exit;
 }
 
