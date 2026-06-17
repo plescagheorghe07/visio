@@ -85,13 +85,17 @@
             if (imgWrap) initTilt(imgWrap);
         });
 
-        var marquee = document.querySelector('.tech-marquee__track');
-        if (marquee && typeof gsap !== 'undefined') {
-            gsap.to(marquee, { xPercent: -50, duration: 28, repeat: -1, ease: 'none' });
+        var marqueeFwd = document.querySelector('.tech-marquee__wrap--fwd .tech-marquee__track');
+        var marqueeRev = document.querySelector('.tech-marquee__track--rev');
+        if (marqueeFwd && typeof gsap !== 'undefined') {
+            gsap.to(marqueeFwd, { xPercent: -50, duration: 32, repeat: -1, ease: 'none' });
+        }
+        if (marqueeRev && typeof gsap !== 'undefined') {
+            gsap.to(marqueeRev, { xPercent: 50, duration: 38, repeat: -1, ease: 'none' });
         }
 
-        gsap.from('.about-visual', { scrollTrigger: { trigger: '.about-grid', start: 'top 78%' }, opacity: 0, x: -50, duration: 1, ease: 'power3.out' });
-        gsap.from('.about-text', { scrollTrigger: { trigger: '.about-grid', start: 'top 78%' }, opacity: 0, x: 50, duration: 1, ease: 'power3.out' });
+        gsap.from('.about-spotlight', { scrollTrigger: { trigger: '.about-body', start: 'top 80%' }, opacity: 0, x: -40, duration: 0.9, ease: 'power3.out' });
+        gsap.from('.about-copy', { scrollTrigger: { trigger: '.about-body', start: 'top 80%' }, opacity: 0, x: 40, duration: 0.9, ease: 'power3.out' });
         gsap.from('.contact-form', { scrollTrigger: { trigger: '.contact-grid', start: 'top 78%' }, opacity: 0, y: 40, duration: 0.8, ease: 'power3.out' });
 
         document.querySelectorAll('.stat-card[data-count]').forEach(function (card) {
@@ -111,9 +115,6 @@
 
         gsap.to('.hero-orb--1', { x: 40, y: -30, duration: 6, repeat: -1, yoyo: true, ease: 'sine.inOut' });
         gsap.to('.hero-orb--2', { x: -30, y: 40, duration: 7, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-        gsap.to('.about-card--1', { y: -12, duration: 3, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-        gsap.to('.about-card--2', { y: 10, duration: 2.5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-        gsap.to('.about-card--3', { y: -8, duration: 3.5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
 
         var glow = document.querySelector('.cursor-glow');
         if (glow && window.matchMedia('(pointer:fine)').matches) {

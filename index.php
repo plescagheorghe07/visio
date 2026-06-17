@@ -154,42 +154,71 @@ $aboutFeatures = [
     </div>
 </section>
 
-<section class="stats section">
-    <div class="container stats-grid">
-        <div class="stat-card" data-count="<?= $projectCount ?>" data-wave-anchor>
-            <div class="stat-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-            </div>
-            <span class="stat-number">0</span>
-            <span class="stat-label"><?= e(__('stats_projects')) ?></span>
-        </div>
-        <div class="stat-card" data-count="<?= max($tagCount, 15) ?>" data-wave-anchor>
-            <div class="stat-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            </div>
-            <span class="stat-number">0</span>
-            <span class="stat-label"><?= e(__('stats_technologies')) ?></span>
-        </div>
-        <div class="stat-card" data-count="100" data-wave-anchor>
-            <div class="stat-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </div>
-            <span class="stat-number">0</span>
-            <span class="stat-suffix">%</span>
-            <span class="stat-label"><?= e(__('stats_satisfaction')) ?></span>
+<section class="stats section section--compact">
+    <div class="container">
+        <div class="stats-band">
+            <article class="stat-card stat-card--v2" data-count="<?= $projectCount ?>" data-wave-anchor>
+                <div class="stat-card__accent"></div>
+                <div class="stat-card__inner">
+                    <div class="stat-card__icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                    </div>
+                    <div class="stat-card__data">
+                        <span class="stat-number">0</span>
+                        <span class="stat-label"><?= e(__('stats_projects')) ?></span>
+                        <span class="stat-card__hint"><?= e(__('stats_projects_hint')) ?></span>
+                    </div>
+                </div>
+            </article>
+            <article class="stat-card stat-card--v2" data-count="<?= max($tagCount, 15) ?>" data-wave-anchor>
+                <div class="stat-card__accent"></div>
+                <div class="stat-card__inner">
+                    <div class="stat-card__icon stat-card__icon--purple">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    </div>
+                    <div class="stat-card__data">
+                        <span class="stat-number">0</span>
+                        <span class="stat-label"><?= e(__('stats_technologies')) ?></span>
+                        <span class="stat-card__hint"><?= e(__('stats_technologies_hint')) ?></span>
+                    </div>
+                </div>
+            </article>
+            <article class="stat-card stat-card--v2" data-count="100" data-wave-anchor>
+                <div class="stat-card__accent"></div>
+                <div class="stat-card__inner">
+                    <div class="stat-card__icon stat-card__icon--pink">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </div>
+                    <div class="stat-card__data">
+                        <span class="stat-number">0</span><span class="stat-suffix">%</span>
+                        <span class="stat-label"><?= e(__('stats_satisfaction')) ?></span>
+                        <span class="stat-card__hint"><?= e(__('stats_satisfaction_hint')) ?></span>
+                    </div>
+                </div>
+            </article>
         </div>
     </div>
 </section>
 
 <section class="tech-marquee section section--compact" aria-label="<?= e(__('tech_marquee_label')) ?>">
-    <div class="container">
+    <div class="container tech-marquee__header">
         <p class="tech-marquee__label"><?= e(__('tech_marquee_label')) ?></p>
+        <p class="tech-marquee__sub"><?= e(__('tech_marquee_sub')) ?></p>
     </div>
-    <div class="tech-marquee__wrap">
-        <div class="tech-marquee__track">
-            <?php foreach (array_merge($techStack, $techStack) as $tech): ?>
-            <span class="tech-chip"><?= e($tech) ?></span>
-            <?php endforeach; ?>
+    <div class="tech-marquee__lanes">
+        <div class="tech-marquee__wrap tech-marquee__wrap--fwd">
+            <div class="tech-marquee__track">
+                <?php foreach (array_merge($techStack, $techStack) as $tech): ?>
+                <span class="tech-chip"><span class="tech-chip__dot"></span><?= e($tech) ?></span>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="tech-marquee__wrap tech-marquee__wrap--rev">
+            <div class="tech-marquee__track tech-marquee__track--rev">
+                <?php foreach (array_merge(array_reverse($techStack), array_reverse($techStack)) as $tech): ?>
+                <span class="tech-chip tech-chip--alt"><span class="tech-chip__dot"></span><?= e($tech) ?></span>
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
 </section>
@@ -197,31 +226,45 @@ $aboutFeatures = [
 <section class="about section fx-section" id="about">
     <div class="fx-grid-bg" aria-hidden="true"></div>
     <div class="container">
-        <div class="about-grid">
-            <div class="about-visual" data-wave-anchor>
-                <div class="about-card about-card--leader">
-                    <div class="about-card__avatar">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+        <div class="about-header section-header--fx">
+            <span class="section-label"><?= e(__('about_label')) ?></span>
+            <h2 class="section-title"><?= e(__('about_title')) ?></h2>
+            <p class="section-subtitle"><?= e(__('about_lead')) ?></p>
+        </div>
+        <div class="about-body">
+            <div class="about-spotlight fx-border-glow" data-wave-anchor>
+                <div class="about-leader">
+                    <div class="about-leader__avatar">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
                     </div>
                     <div>
-                        <strong><?= e(__('about_leader_name')) ?></strong>
-                        <span><?= e(__('about_leader_role')) ?></span>
+                        <strong class="about-leader__name"><?= e(__('about_leader_name')) ?></strong>
+                        <span class="about-leader__role"><?= e(__('about_leader_role')) ?></span>
                     </div>
                 </div>
-                <?php foreach (array_slice($aboutFeatures, 0, 3) as $i => $feat): ?>
-                <div class="about-card about-card--<?= $i + 1 ?>">
-                    <span class="about-card-label"><?= e(__($feat['title'])) ?></span>
-                    <span class="about-card-value"><?= e(__($feat['desc'])) ?></span>
+                <div class="about-pills">
+                    <span class="about-pill">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        PHP · High Performance
+                    </span>
+                    <span class="about-pill">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>
+                        SEO · Schema.org
+                    </span>
+                    <span class="about-pill">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z"/></svg>
+                        GSAP · Animations
+                    </span>
                 </div>
-                <?php endforeach; ?>
-                <div class="about-glow"></div>
             </div>
-            <div class="about-text">
-                <span class="section-label"><?= e(__('about_label')) ?></span>
-                <h2 class="section-title"><?= e(__('about_title')) ?></h2>
-                <p class="about-lead"><?= e(__('about_lead')) ?></p>
+            <div class="about-copy">
                 <p><?= e(__('about_text')) ?></p>
                 <p><?= e(__('about_text2')) ?></p>
+                <ul class="about-checklist">
+                    <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><?= e(__('about_check1')) ?></li>
+                    <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><?= e(__('about_check2')) ?></li>
+                    <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><?= e(__('about_check3')) ?></li>
+                </ul>
                 <a href="#services" class="btn btn--primary about-cta">
                     <?= e(__('about_cta')) ?>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -260,8 +303,9 @@ $aboutFeatures = [
         </div>
         <div class="services-grid">
             <?php foreach ($services as $svc): ?>
-            <article class="service-card fx-border-glow" data-wave-anchor>
-                <div class="service-card__head">
+            <article class="service-card service-card--v2 fx-border-glow" data-wave-anchor>
+                <div class="service-card__stripe"></div>
+                <div class="service-card__content">
                     <span class="service-num"><?= $svc['num'] ?></span>
                     <div class="service-icon service-icon--<?= e($svc['icon']) ?>">
                         <?php if ($svc['icon'] === 'cloud'): ?>
@@ -294,6 +338,7 @@ $aboutFeatures = [
                     <?= e(__('service_learn_more')) ?>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
+                </div>
             </article>
             <?php endforeach; ?>
         </div>
@@ -318,13 +363,11 @@ $aboutFeatures = [
                 $primaryTag = $tags[0] ?? 'Web';
                 $num = str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT);
             ?>
-            <article class="project-card fx-border-glow" data-wave-anchor>
+            <article class="project-card project-card--v2 fx-border-glow" data-wave-anchor>
                 <a href="<?= project_href($project['slug']) ?>" class="project-card-link">
-                    <div class="project-card__top">
+                    <div class="project-card-image">
                         <span class="project-card__index"><?= $num ?></span>
                         <span class="project-card__category"><?= e($primaryTag) ?></span>
-                    </div>
-                    <div class="project-card-image">
                         <img src="<?= e($imgSrc) ?>" alt="<?= e($title) ?> — Visio Moldova" loading="lazy"
                              onerror="this.src='<?= brand_logo_href() ?>'">
                         <div class="project-card-overlay">
@@ -336,20 +379,14 @@ $aboutFeatures = [
                     </div>
                     <div class="project-card-body">
                         <h3><?= e($title) ?></h3>
-                        <p><?= e(mb_substr($desc, 0, 140)) ?><?= mb_strlen($desc) > 140 ? '…' : '' ?></p>
-                        <div class="project-card__meta">
-                            <?php if ($tags): ?>
-                            <div class="project-tags">
-                                <?php foreach (array_slice($tags, 0, 5) as $tag): ?>
-                                <span class="tag"><?= e($tag) ?></span>
-                                <?php endforeach; ?>
-                            </div>
-                            <?php endif; ?>
-                            <span class="project-card__tech-count">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                                <?= count($tags) ?> <?= e(__('project_tech_count')) ?>
-                            </span>
+                        <p><?= e(mb_substr($desc, 0, 120)) ?><?= mb_strlen($desc) > 120 ? '…' : '' ?></p>
+                        <?php if ($tags): ?>
+                        <div class="project-tags">
+                            <?php foreach (array_slice($tags, 0, 4) as $tag): ?>
+                            <span class="tag"><?= e($tag) ?></span>
+                            <?php endforeach; ?>
                         </div>
+                        <?php endif; ?>
                     </div>
                 </a>
             </article>
