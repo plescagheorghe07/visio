@@ -605,7 +605,7 @@ img { max-width: 100%; display: block; }
     margin-bottom: 7px;
     line-height: 1.4;
 }
-.service-features li::before {
+.service-features:not(.service-features--checks) li::before {
     content: '';
     position: absolute;
     left: 0; top: 8px;
