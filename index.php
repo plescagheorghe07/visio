@@ -24,78 +24,100 @@ $services = [
     ['icon' => 'palette', 'title' => 'service_design_title', 'desc' => 'service_design_desc', 'features' => 'service_design_features', 'tags' => 'service_design_tags', 'num' => '04', 'featured' => false],
 ];
 
-$aboutPoints = array_filter(array_map('trim', explode('|', __('about_points'))));
+$aboutValues = array_filter(array_map('trim', explode('|', __('about_values'))));
 $techStack = array_filter(array_map('trim', explode(',', __('about_tech_marquee'))));
 ?>
 
-<section class="hero hero--clean" id="home">
-    <div class="hero-surface" aria-hidden="true"></div>
-    <div class="container hero-inner">
-        <p class="hero-eyebrow"><?= e(__('hero_eyebrow')) ?></p>
-        <h1 class="hero-headline">
-            <?= e(__('hero_headline_1')) ?><span class="hero-headline-accent"><?= e(__('hero_headline_accent')) ?></span><?= e(__('hero_headline_2')) ?>
-        </h1>
-        <p class="hero-lead"><?= e(__('hero_subtitle')) ?></p>
-        <div class="hero-cta-row">
-            <a href="#projects" class="btn btn--primary btn--lg"><?= e(__('hero_cta_projects')) ?></a>
-            <a href="#contact" class="btn btn--ghost btn--lg"><?= e(__('hero_cta_contact')) ?></a>
+<section class="hero" id="home">
+    <div class="hero-bg">
+        <div class="hero-orb hero-orb--1"></div>
+        <div class="hero-orb hero-orb--2"></div>
+        <div class="hero-grid"></div>
+    </div>
+    <div class="container hero-shell">
+        <div class="hero-wrap">
+            <div class="hero-copy">
+                <span class="badge hero-badge"><?= e(__('hero_badge')) ?></span>
+                <h1 class="hero-title"><?= e(__('hero_title')) ?></h1>
+                <p class="hero-subtitle"><?= e(__('hero_subtitle')) ?></p>
+                <div class="hero-actions">
+                    <a href="#projects" class="btn btn--primary btn--lg"><?= e(__('hero_cta_projects')) ?></a>
+                    <a href="#contact" class="btn btn--outline btn--lg"><?= e(__('hero_cta_contact')) ?></a>
+                </div>
+            </div>
+            <aside class="hero-panel" aria-label="Tech stack">
+                <p class="hero-panel-label"><?= e(__('hero_stack_label')) ?></p>
+                <ul class="hero-stack-list">
+                    <?php foreach (array_slice($techStack, 0, 8) as $tech): ?>
+                    <li><?= e($tech) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </aside>
         </div>
-        <dl class="hero-metrics">
-            <div class="hero-metric" data-count="<?= $projectCount ?>">
-                <dt><?= e(__('stats_projects')) ?></dt>
-                <dd><span class="metric-num">0</span></dd>
+
+        <div class="hero-stats">
+            <div class="stat-card stat-card--hero" data-count="<?= $projectCount ?>">
+                <span class="stat-number">0</span>
+                <span class="stat-label"><?= e(__('stats_projects')) ?></span>
             </div>
-            <div class="hero-metric" data-count="<?= max($tagCount, 15) ?>">
-                <dt><?= e(__('stats_technologies')) ?></dt>
-                <dd><span class="metric-num">0</span></dd>
+            <div class="stat-card stat-card--hero" data-count="<?= max($tagCount, 15) ?>">
+                <span class="stat-number">0</span>
+                <span class="stat-label"><?= e(__('stats_technologies')) ?></span>
             </div>
-            <div class="hero-metric" data-count="3">
-                <dt><?= e(__('stats_languages')) ?></dt>
-                <dd><span class="metric-num">0</span></dd>
+            <div class="stat-card stat-card--hero" data-count="3">
+                <span class="stat-number">0</span>
+                <span class="stat-label"><?= e(__('stats_languages')) ?></span>
             </div>
-            <div class="hero-metric" data-count="100">
-                <dt><?= e(__('stats_satisfaction')) ?></dt>
-                <dd><span class="metric-num">0</span>%</dd>
+            <div class="stat-card stat-card--hero" data-count="100">
+                <span class="stat-number">0</span><span class="stat-suffix">%</span>
+                <span class="stat-label"><?= e(__('stats_satisfaction')) ?></span>
             </div>
-        </dl>
+        </div>
     </div>
 </section>
 
 <section class="about section" id="about">
-    <div class="container about-split">
-        <div class="about-copy">
+    <div class="container about-layout">
+        <div class="about-main">
             <span class="section-label"><?= e(__('about_label')) ?></span>
             <h2 class="section-title"><?= e(__('about_title')) ?></h2>
-            <p class="about-intro"><?= e(__('about_intro')) ?></p>
+            <p class="about-lead"><?= e(__('about_intro')) ?></p>
             <p><?= e(__('about_text')) ?></p>
-            <?php if ($aboutPoints): ?>
-            <ul class="about-points">
-                <?php foreach ($aboutPoints as $point): ?>
-                <li><?= e($point) ?></li>
-                <?php endforeach; ?>
-            </ul>
-            <?php endif; ?>
-            <p class="about-outro"><?= e(__('about_text2')) ?></p>
+            <p><?= e(__('about_text2')) ?></p>
+            <a href="#services" class="btn btn--outline btn--sm"><?= e(__('about_cta')) ?></a>
         </div>
-        <aside class="about-aside">
-            <div class="about-aside-card">
-                <p class="about-aside-label"><?= e(__('about_leader_role')) ?></p>
-                <p class="about-aside-name">Pleșca Gheorghe</p>
-                <p class="about-aside-desc"><?= e(__('about_aside_text')) ?></p>
-                <a href="#services" class="about-aside-link"><?= e(__('about_cta')) ?> →</a>
+        <div class="about-side">
+            <div class="about-values">
+                <?php foreach ($aboutValues as $value):
+                    $parts = array_map('trim', explode(':', $value, 2));
+                ?>
+                <article class="value-card">
+                    <h3><?= e($parts[0] ?? '') ?></h3>
+                    <p><?= e($parts[1] ?? '') ?></p>
+                </article>
+                <?php endforeach; ?>
             </div>
-            <?php if ($techStack): ?>
-            <div class="tech-stack-block">
-                <p class="tech-stack-label"><?= e(__('about_tech_label')) ?></p>
-                <div class="tech-stack-grid">
-                    <?php foreach ($techStack as $tech): ?>
-                    <span class="tech-chip"><?= e($tech) ?></span>
-                    <?php endforeach; ?>
+            <div class="about-leader-card">
+                <strong>Pleșca Gheorghe</strong>
+                <span><?= e(__('about_leader_role')) ?></span>
+                <div class="about-leader-badges">
+                    <span class="tag">Full Stack</span>
+                    <span class="tag">PHP</span>
+                    <span class="tag">React</span>
                 </div>
             </div>
-            <?php endif; ?>
-        </aside>
+        </div>
     </div>
+    <?php if ($techStack): ?>
+    <div class="container">
+        <p class="tech-stack-label"><?= e(__('hero_stack_label')) ?></p>
+        <div class="tech-stack">
+            <?php foreach ($techStack as $tech): ?>
+            <span class="tech-stack-item"><?= e($tech) ?></span>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php endif; ?>
 </section>
 
 <section class="services section" id="services">
@@ -105,19 +127,19 @@ $techStack = array_filter(array_map('trim', explode(',', __('about_tech_marquee'
             <h2 class="section-title"><?= e(__('services_title')) ?></h2>
             <p class="section-subtitle"><?= e(__('services_subtitle')) ?></p>
         </div>
-        <div class="services-grid">
+        <div class="services-bento">
             <?php foreach ($services as $svc):
                 $features = array_filter(array_map('trim', explode('|', __($svc['features']))));
                 $tags = array_filter(array_map('trim', explode(',', __($svc['tags']))));
             ?>
             <article class="service-card<?= $svc['featured'] ? ' service-card--featured' : '' ?>">
-                <div class="service-card-head">
+                <div class="service-card-top">
                     <span class="service-num"><?= e($svc['num']) ?></span>
-                    <h3><?= e(__($svc['title'])) ?></h3>
                 </div>
+                <h3><?= e(__($svc['title'])) ?></h3>
                 <p class="service-desc"><?= e(__($svc['desc'])) ?></p>
                 <?php if ($features): ?>
-                <ul class="service-features service-features--checks">
+                <ul class="service-features">
                     <?php foreach ($features as $feat): ?>
                     <li><?= e($feat) ?></li>
                     <?php endforeach; ?>
@@ -162,7 +184,12 @@ $techStack = array_filter(array_map('trim', explode(',', __('about_tech_marquee'
                              onerror="this.src='<?= brand_logo_href() ?>'">
                     </div>
                     <div class="project-showcase-content">
-                        <span class="project-showcase-cat"><?= e($category) ?></span>
+                        <div class="project-showcase-meta">
+                            <span class="project-showcase-cat"><?= e($category) ?></span>
+                            <?php if (count($tags) > 1): ?>
+                            <span class="project-showcase-tech-count"><?= count($tags) ?> <?= e(__('project_tech_count')) ?></span>
+                            <?php endif; ?>
+                        </div>
                         <h3><?= e($title) ?></h3>
                         <p><?= e(mb_substr($desc, 0, 180)) ?><?= mb_strlen($desc) > 180 ? '…' : '' ?></p>
                         <?php if ($tags): ?>
@@ -172,7 +199,7 @@ $techStack = array_filter(array_map('trim', explode(',', __('about_tech_marquee'
                             <?php endforeach; ?>
                         </div>
                         <?php endif; ?>
-                        <span class="project-showcase-link-label"><?= e(__('project_view')) ?> →</span>
+                        <span class="project-showcase-link-text"><?= e(__('project_view')) ?> →</span>
                     </div>
                 </a>
             </article>
@@ -182,25 +209,25 @@ $techStack = array_filter(array_map('trim', explode(',', __('about_tech_marquee'
 </section>
 
 <section class="contact section" id="contact">
-    <div class="container contact-split">
-        <div class="contact-copy">
+    <div class="container contact-layout">
+        <div class="contact-info">
             <span class="section-label"><?= e(__('contact_label')) ?></span>
             <h2 class="section-title"><?= e(__('contact_title')) ?></h2>
             <p class="contact-lead"><?= e(__('contact_subtitle')) ?></p>
-            <ul class="contact-facts">
-                <li>
+            <div class="contact-cards">
+                <a href="mailto:plescagheorghe07@gmail.com" class="contact-card">
                     <strong><?= e(__('contact_email_label')) ?></strong>
-                    <a href="mailto:plescagheorghe07@gmail.com">plescagheorghe07@gmail.com</a>
-                </li>
-                <li>
+                    <span>plescagheorghe07@gmail.com</span>
+                </a>
+                <div class="contact-card">
                     <strong><?= e(__('contact_location_label')) ?></strong>
                     <span><?= e(__('contact_location')) ?></span>
-                </li>
-                <li>
+                </div>
+                <div class="contact-card">
                     <strong><?= e(__('contact_response_label')) ?></strong>
                     <span><?= e(__('contact_response')) ?></span>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
         <form class="contact-form" id="contactForm" action="<?= api_href('api/contact.php') ?>" method="POST">
             <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
@@ -229,7 +256,7 @@ $techStack = array_filter(array_map('trim', explode(',', __('about_tech_marquee'
                 <textarea id="message" name="message" rows="5" required maxlength="5000"></textarea>
             </div>
             <div class="form-feedback" id="formFeedback"></div>
-            <button type="submit" class="btn btn--primary btn--lg"><?= e(__('contact_send')) ?></button>
+            <button type="submit" class="btn btn--primary btn--lg btn--full"><?= e(__('contact_send')) ?></button>
         </form>
     </div>
 </section>

@@ -9,11 +9,12 @@
         if (typeof gsap === 'undefined') return;
         gsap.registerPlugin(ScrollTrigger);
 
-        gsap.from('.hero-eyebrow', { opacity: 0, y: 16, duration: 0.6, delay: 0.1, ease: 'power2.out' });
-        gsap.from('.hero-headline', { opacity: 0, y: 36, duration: 0.85, delay: 0.2, ease: 'power3.out' });
-        gsap.from('.hero-lead', { opacity: 0, y: 20, duration: 0.7, delay: 0.35, ease: 'power2.out' });
-        gsap.from('.hero-cta-row .btn', { opacity: 0, y: 16, duration: 0.6, delay: 0.48, stagger: 0.08, ease: 'power2.out' });
-        gsap.from('.hero-metric', { opacity: 0, y: 20, duration: 0.6, delay: 0.6, stagger: 0.06, ease: 'power2.out' });
+        gsap.from('.hero-badge', { opacity: 0, y: 20, duration: 0.7, delay: 0.1, ease: 'power3.out' });
+        gsap.from('.hero-title', { opacity: 0, y: 40, duration: 0.9, delay: 0.2, ease: 'power3.out' });
+        gsap.from('.hero-subtitle', { opacity: 0, y: 24, duration: 0.8, delay: 0.35, ease: 'power3.out' });
+        gsap.from('.hero-actions .btn', { opacity: 0, y: 20, duration: 0.6, delay: 0.5, stagger: 0.08, ease: 'power2.out' });
+        gsap.from('.hero-panel', { opacity: 0, x: 24, duration: 0.8, delay: 0.4, ease: 'power3.out' });
+        gsap.from('.hero-stats .stat-card', { opacity: 0, y: 24, duration: 0.6, delay: 0.6, stagger: 0.07, ease: 'power2.out' });
 
         gsap.utils.toArray('.section-label').forEach(function (el) {
             gsap.from(el, {
@@ -28,11 +29,27 @@
             });
         });
 
+        gsap.utils.toArray('.stat-card[data-count]').forEach(function (card, i) {
+            gsap.from(card, {
+                scrollTrigger: { trigger: card, start: 'top 88%' },
+                opacity: 0, y: 40, scale: 0.95, duration: 0.65, delay: i * 0.08, ease: 'back.out(1.5)',
+            });
+        });
+
+        gsap.utils.toArray('.value-card').forEach(function (card, i) {
+            gsap.from(card, {
+                scrollTrigger: { trigger: card, start: 'top 88%' },
+                opacity: 0, y: 40, duration: 0.7, delay: i * 0.1, ease: 'power3.out',
+            });
+        });
+
         gsap.utils.toArray('.project-showcase').forEach(function (card, i) {
             gsap.from(card, {
                 scrollTrigger: { trigger: card, start: 'top 90%' },
-                opacity: 0, y: 28, duration: 0.65, delay: i * 0.05, ease: 'power2.out',
+                opacity: 0, x: i % 2 === 0 ? -40 : 40, duration: 0.85, ease: 'power3.out',
             });
+            var imgWrap = card.querySelector('.project-showcase-visual');
+            if (imgWrap) initTilt(imgWrap);
         });
 
         gsap.utils.toArray('.service-card').forEach(function (card, i) {
@@ -42,21 +59,26 @@
             });
         });
 
-        gsap.from('.about-aside-card', { scrollTrigger: { trigger: '.about-split', start: 'top 80%' }, opacity: 0, y: 24, duration: 0.7, ease: 'power2.out' });
-        gsap.from('.contact-form', { scrollTrigger: { trigger: '.contact-split', start: 'top 78%' }, opacity: 0, y: 30, duration: 0.7, ease: 'power2.out' });
+        gsap.from('.about-layout', { scrollTrigger: { trigger: '.about-layout', start: 'top 82%' }, opacity: 0, y: 32, duration: 0.8, ease: 'power3.out' });
+        gsap.from('.contact-form', { scrollTrigger: { trigger: '.contact-layout', start: 'top 78%' }, opacity: 0, y: 32, duration: 0.8, ease: 'power3.out' });
 
-        document.querySelectorAll('.hero-metric[data-count]').forEach(function (card) {
+        document.querySelectorAll('.stat-card[data-count]').forEach(function (card) {
             var target = parseInt(card.dataset.count, 10);
-            var numEl = card.querySelector('.metric-num');
+            var numEl = card.querySelector('.stat-number');
             if (!numEl) return;
-            gsap.to({ val: 0 }, {
-                val: target,
-                duration: 1.8,
-                delay: 0.7,
-                ease: 'power2.out',
-                onUpdate: function () { numEl.textContent = Math.round(this.targets()[0].val); },
+            ScrollTrigger.create({
+                trigger: card, start: 'top 88%', once: true,
+                onEnter: function () {
+                    gsap.to({ val: 0 }, {
+                        val: target, duration: 2.2, ease: 'power2.out',
+                        onUpdate: function () { numEl.textContent = Math.round(this.targets()[0].val); },
+                    });
+                },
             });
         });
+
+        gsap.to('.hero-orb--1', { x: 40, y: -30, duration: 6, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+        gsap.to('.hero-orb--2', { x: -30, y: 40, duration: 7, repeat: -1, yoyo: true, ease: 'sine.inOut' });
 
         var glow = document.querySelector('.cursor-glow');
         if (glow && window.matchMedia('(pointer:fine)').matches) {
@@ -336,15 +358,17 @@
 
     function initProjectHero() {
         if (typeof gsap === 'undefined') return;
-        var title = document.querySelector('.project-hero-title');
-        if (!title) return;
+        var banner = document.querySelector('.project-hero-banner');
+        if (!banner) return;
         gsap.from('.project-breadcrumb', { opacity: 0, y: -8, duration: 0.5, ease: 'power2.out' });
-        gsap.from('.project-hero-type', { opacity: 0, y: 12, duration: 0.5, delay: 0.05, ease: 'power2.out' });
-        gsap.from(title, { opacity: 0, y: 24, duration: 0.7, delay: 0.1, ease: 'power3.out' });
-        gsap.from('.project-hero-desc', { opacity: 0, y: 16, duration: 0.6, delay: 0.18, ease: 'power2.out' });
-        gsap.from('.project-actions', { opacity: 0, y: 12, duration: 0.5, delay: 0.26, ease: 'power2.out' });
+        gsap.from('.project-hero-banner .project-hero-title', { opacity: 0, y: 32, duration: 0.8, delay: 0.08, ease: 'power3.out' });
+        gsap.from('.project-hero-banner .project-hero-desc', { opacity: 0, y: 20, duration: 0.7, delay: 0.16, ease: 'power3.out' });
+        gsap.from('.project-actions', { opacity: 0, y: 16, duration: 0.6, delay: 0.28, ease: 'power2.out' });
         gsap.utils.toArray('.gallery-item').forEach(function (item, i) {
-            gsap.from(item, { opacity: 0, y: 20, duration: 0.5, delay: i * 0.05, ease: 'power2.out' });
+            gsap.from(item, { opacity: 0, y: 24, duration: 0.5, delay: i * 0.05, ease: 'power2.out' });
+        });
+        gsap.utils.toArray('.project-related-card').forEach(function (card, i) {
+            gsap.from(card, { opacity: 0, y: 20, duration: 0.5, delay: i * 0.07, ease: 'power2.out' });
         });
     }
 })();

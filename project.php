@@ -55,71 +55,64 @@ foreach ($images as $i => $img) {
     ];
 }
 $loadLightbox = count($galleryItems) > 0;
-$hasWebsite = !empty($project['website_link']);
-$hasGithub = !empty($project['github_link']);
+$hasExternal = !empty($project['website_link']) || !empty($project['github_link']);
 
 require __DIR__ . '/partials/header.php';
 ?>
 
 <div class="project-page">
-    <section class="project-hero">
-        <div class="project-hero-media" aria-hidden="true">
-            <img src="<?= e($coverSrc) ?>" alt="" loading="eager" onerror="this.style.display='none'">
+    <section class="project-hero-banner">
+        <div class="project-hero-banner-bg">
+            <img src="<?= e($coverSrc) ?>" alt="" aria-hidden="true" loading="eager"
+                 onerror="this.style.display='none'">
+            <div class="project-hero-banner-overlay"></div>
         </div>
-        <div class="container project-hero-body">
+        <div class="container project-hero-banner-inner">
             <nav class="project-breadcrumb" aria-label="Breadcrumb">
                 <a href="<?= home_href() ?>">Visio</a>
-                <span>/</span>
+                <span aria-hidden="true">/</span>
                 <a href="<?= home_href() ?>#projects"><?= e(__('nav_projects')) ?></a>
-                <span>/</span>
+                <span aria-hidden="true">/</span>
                 <span aria-current="page"><?= e($title) ?></span>
             </nav>
 
-            <div class="project-hero-content">
-                <span class="project-hero-type"><?= e($tags[0] ?? 'Web Application') ?></span>
-                <h1 class="project-hero-title"><?= e($title) ?></h1>
-                <p class="project-hero-desc"><?= e($description) ?></p>
+            <span class="section-label section-label--light"><?= e(__('projects_label')) ?></span>
+            <h1 class="project-hero-title"><?= e($title) ?></h1>
+            <p class="project-hero-desc"><?= e($description) ?></p>
 
-                <div class="project-actions">
-                    <?php if ($hasWebsite || $hasGithub): ?>
-                    <div class="project-actions-group">
-                        <?php if ($hasWebsite): ?>
-                        <a href="<?= e($project['website_link']) ?>" target="_blank" rel="noopener noreferrer" class="btn btn--primary">
-                            <?= e(__('project_website')) ?> ↗
-                        </a>
-                        <?php endif; ?>
-                        <?php if ($hasGithub): ?>
-                        <a href="<?= e($project['github_link']) ?>" target="_blank" rel="noopener noreferrer" class="btn btn--outline btn--on-dark">
-                            <?= e(__('project_github')) ?> ↗
-                        </a>
-                        <?php endif; ?>
-                    </div>
+            <div class="project-meta-row">
+                <span class="project-meta-chip"><?= e($tags[0] ?? 'Web Application') ?></span>
+                <span class="project-meta-chip"><?= e(__('contact_location')) ?></span>
+                <span class="project-meta-chip">Visio</span>
+            </div>
+
+            <?php if ($tags): ?>
+            <div class="project-hero-tags">
+                <?php foreach ($tags as $tag): ?>
+                <span class="tag tag--light"><?= e($tag) ?></span>
+                <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
+
+            <div class="project-actions">
+                <?php if ($hasExternal): ?>
+                <div class="project-actions-group">
+                    <?php if (!empty($project['website_link'])): ?>
+                    <a href="<?= e($project['website_link']) ?>" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--lg">
+                        <?= e(__('project_website')) ?> ↗
+                    </a>
                     <?php endif; ?>
-                    <a href="<?= home_href() ?>#contact" class="project-actions-contact"><?= e(__('hero_cta_contact')) ?> →</a>
-                </div>
-
-                <?php if ($tags): ?>
-                <div class="project-hero-tags">
-                    <?php foreach ($tags as $tag): ?>
-                    <span class="tag tag--on-dark"><?= e($tag) ?></span>
-                    <?php endforeach; ?>
+                    <?php if (!empty($project['github_link'])): ?>
+                    <a href="<?= e($project['github_link']) ?>" target="_blank" rel="noopener noreferrer" class="btn btn--outline btn--lg btn--light">
+                        <?= e(__('project_github')) ?> ↗
+                    </a>
+                    <?php endif; ?>
                 </div>
                 <?php endif; ?>
-
-                <dl class="project-hero-meta">
-                    <div>
-                        <dt><?= e(__('project_location')) ?></dt>
-                        <dd><?= e(__('contact_location')) ?></dd>
-                    </div>
-                    <div>
-                        <dt><?= e(__('project_agency')) ?></dt>
-                        <dd>Visio</dd>
-                    </div>
-                    <div>
-                        <dt><?= e(__('project_tech_stack')) ?></dt>
-                        <dd><?= count($tags) ?> <?= e(__('project_tech_count')) ?></dd>
-                    </div>
-                </dl>
+                <div class="project-actions-group project-actions-group--secondary">
+                    <a href="<?= home_href() ?>#projects" class="btn btn--outline btn--sm btn--light"><?= e(__('project_back')) ?></a>
+                    <a href="<?= home_href() ?>#contact" class="btn btn--outline btn--sm btn--light"><?= e(__('hero_cta_contact')) ?></a>
+                </div>
             </div>
         </div>
     </section>
@@ -128,7 +121,7 @@ require __DIR__ . '/partials/header.php';
     <section class="project-gallery section">
         <div class="container">
             <h2 class="section-title section-title--sm"><?= e(__('project_gallery')) ?></h2>
-            <div class="gallery-grid" id="projectGallery">
+            <div class="gallery-grid gallery-grid--project" id="projectGallery">
                 <?php foreach ($galleryItems as $i => $item): ?>
                 <button type="button" class="gallery-item" data-lightbox-index="<?= $i ?>" aria-label="<?= e($item['alt']) ?>">
                     <img src="<?= e($item['src']) ?>" alt="<?= e($item['alt']) ?>" loading="lazy"
@@ -169,6 +162,7 @@ require __DIR__ . '/partials/header.php';
     <?php if ($relatedProjects): ?>
     <section class="project-related section">
         <div class="container">
+            <span class="section-label"><?= e(__('project_related_label')) ?></span>
             <h2 class="section-title section-title--sm"><?= e(__('project_related_title')) ?></h2>
             <div class="project-related-grid">
                 <?php foreach ($relatedProjects as $rp):
@@ -185,6 +179,7 @@ require __DIR__ . '/partials/header.php';
                     <div class="project-related-body">
                         <span class="project-related-cat"><?= e($rpTags[0] ?? 'Web App') ?></span>
                         <h3><?= e($rpTitle) ?></h3>
+                        <span class="project-related-link"><?= e(__('project_view')) ?> →</span>
                     </div>
                 </a>
                 <?php endforeach; ?>
@@ -195,8 +190,11 @@ require __DIR__ . '/partials/header.php';
 
     <section class="project-cta-band">
         <div class="container project-cta-band-inner">
-            <p><?= e(__('contact_title')) ?></p>
-            <a href="<?= home_href() ?>#contact" class="btn btn--primary"><?= e(__('hero_cta_contact')) ?></a>
+            <div>
+                <h2><?= e(__('contact_title')) ?></h2>
+                <p><?= e(__('contact_subtitle')) ?></p>
+            </div>
+            <a href="<?= home_href() ?>#contact" class="btn btn--primary btn--lg"><?= e(__('hero_cta_contact')) ?></a>
         </div>
     </section>
 </div>
