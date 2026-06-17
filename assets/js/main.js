@@ -9,12 +9,12 @@
         if (typeof gsap === 'undefined') return;
         gsap.registerPlugin(ScrollTrigger);
 
-        gsap.from('.hero-badge', { opacity: 0, y: 20, duration: 0.7, delay: 0.1, ease: 'power3.out' });
-        gsap.from('.hero-title', { opacity: 0, y: 40, duration: 0.9, delay: 0.2, ease: 'power3.out' });
-        gsap.from('.hero-subtitle', { opacity: 0, y: 24, duration: 0.8, delay: 0.35, ease: 'power3.out' });
-        gsap.from('.hero-actions .btn', { opacity: 0, y: 20, duration: 0.6, delay: 0.5, stagger: 0.08, ease: 'power2.out' });
-        gsap.from('.hero-panel', { opacity: 0, x: 24, duration: 0.8, delay: 0.4, ease: 'power3.out' });
-        gsap.from('.hero-stats .stat-card', { opacity: 0, y: 24, duration: 0.6, delay: 0.6, stagger: 0.07, ease: 'power2.out' });
+        gsap.from('.hero-eyebrow', { opacity: 0, y: 24, duration: 0.7, delay: 0.1, ease: 'power3.out' });
+        gsap.from('.hero-modern-line', { opacity: 0, y: 50, duration: 0.9, delay: 0.2, stagger: 0.1, ease: 'power4.out' });
+        gsap.from('.hero-modern-subtitle', { opacity: 0, y: 24, duration: 0.7, delay: 0.5, ease: 'power3.out' });
+        gsap.from('.hero-modern-actions .btn', { opacity: 0, y: 20, duration: 0.6, delay: 0.65, stagger: 0.08, ease: 'back.out(1.4)' });
+        gsap.from('.hero-tech-pill', { opacity: 0, scale: 0.9, duration: 0.5, delay: 0.75, stagger: 0.04, ease: 'back.out(1.5)' });
+        gsap.from('.hero-stat', { opacity: 0, y: 24, duration: 0.6, delay: 0.85, stagger: 0.06, ease: 'power3.out' });
 
         gsap.utils.toArray('.section-label').forEach(function (el) {
             gsap.from(el, {
@@ -36,12 +36,15 @@
             });
         });
 
-        gsap.utils.toArray('.value-card').forEach(function (card, i) {
+        gsap.utils.toArray('.value-card--modern').forEach(function (card, i) {
             gsap.from(card, {
                 scrollTrigger: { trigger: card, start: 'top 88%' },
-                opacity: 0, y: 40, duration: 0.7, delay: i * 0.1, ease: 'power3.out',
+                opacity: 0, y: 30, duration: 0.65, delay: i * 0.08, ease: 'power3.out',
             });
         });
+
+        gsap.from('.about-modern-aside', { scrollTrigger: { trigger: '.about-modern-grid', start: 'top 80%' }, opacity: 0, x: 30, duration: 0.8, ease: 'power3.out' });
+        gsap.from('.about-modern-copy', { scrollTrigger: { trigger: '.about-modern-copy', start: 'top 85%' }, opacity: 0, y: 24, duration: 0.7, ease: 'power3.out' });
 
         gsap.utils.toArray('.project-showcase').forEach(function (card, i) {
             gsap.from(card, {
@@ -59,26 +62,31 @@
             });
         });
 
-        gsap.from('.about-layout', { scrollTrigger: { trigger: '.about-layout', start: 'top 82%' }, opacity: 0, y: 32, duration: 0.8, ease: 'power3.out' });
-        gsap.from('.contact-form', { scrollTrigger: { trigger: '.contact-layout', start: 'top 78%' }, opacity: 0, y: 32, duration: 0.8, ease: 'power3.out' });
+        gsap.from('.contact-form--v2', { scrollTrigger: { trigger: '.contact-layout', start: 'top 78%' }, opacity: 0, y: 40, duration: 0.8, ease: 'power3.out' });
+        gsap.from('.contact-card', { scrollTrigger: { trigger: '.contact-cards', start: 'top 85%' }, opacity: 0, x: -20, duration: 0.6, stagger: 0.1, ease: 'power2.out' });
+
+        function animateCounter(card) {
+            var target = parseInt(card.dataset.count, 10);
+            var numEl = card.querySelector('.stat-number') || card.querySelector('.hero-stat-num');
+            if (!numEl || card.dataset.counted) return;
+            card.dataset.counted = '1';
+            gsap.to({ val: 0 }, {
+                val: target, duration: 2.2, ease: 'power2.out',
+                onUpdate: function () { numEl.textContent = Math.round(this.targets()[0].val); },
+            });
+        }
+
+        document.querySelectorAll('.hero-stat[data-count]').forEach(animateCounter);
 
         document.querySelectorAll('.stat-card[data-count]').forEach(function (card) {
-            var target = parseInt(card.dataset.count, 10);
-            var numEl = card.querySelector('.stat-number');
-            if (!numEl) return;
             ScrollTrigger.create({
                 trigger: card, start: 'top 88%', once: true,
-                onEnter: function () {
-                    gsap.to({ val: 0 }, {
-                        val: target, duration: 2.2, ease: 'power2.out',
-                        onUpdate: function () { numEl.textContent = Math.round(this.targets()[0].val); },
-                    });
-                },
+                onEnter: function () { animateCounter(card); },
             });
         });
 
-        gsap.to('.hero-orb--1', { x: 40, y: -30, duration: 6, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-        gsap.to('.hero-orb--2', { x: -30, y: 40, duration: 7, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+        gsap.to('.hero-gradient-blob--1', { x: 30, y: -20, duration: 8, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+        gsap.to('.hero-gradient-blob--2', { x: -20, y: 25, duration: 9, repeat: -1, yoyo: true, ease: 'sine.inOut' });
 
         var glow = document.querySelector('.cursor-glow');
         if (glow && window.matchMedia('(pointer:fine)').matches) {
@@ -358,17 +366,19 @@
 
     function initProjectHero() {
         if (typeof gsap === 'undefined') return;
-        var banner = document.querySelector('.project-hero-banner');
-        if (!banner) return;
-        gsap.from('.project-breadcrumb', { opacity: 0, y: -8, duration: 0.5, ease: 'power2.out' });
-        gsap.from('.project-hero-banner .project-hero-title', { opacity: 0, y: 32, duration: 0.8, delay: 0.08, ease: 'power3.out' });
-        gsap.from('.project-hero-banner .project-hero-desc', { opacity: 0, y: 20, duration: 0.7, delay: 0.16, ease: 'power3.out' });
-        gsap.from('.project-actions', { opacity: 0, y: 16, duration: 0.6, delay: 0.28, ease: 'power2.out' });
-        gsap.utils.toArray('.gallery-item').forEach(function (item, i) {
-            gsap.from(item, { opacity: 0, y: 24, duration: 0.5, delay: i * 0.05, ease: 'power2.out' });
+        var title = document.querySelector('.project-hero-title');
+        if (title) {
+            gsap.from('.project-breadcrumb', { opacity: 0, y: -10, duration: 0.6, ease: 'power2.out' });
+            gsap.from(title, { opacity: 0, y: 40, duration: 0.9, delay: 0.1, ease: 'power3.out' });
+            gsap.from('.project-hero-desc', { opacity: 0, y: 24, duration: 0.8, delay: 0.2, ease: 'power3.out' });
+            gsap.from('.project-action-bar', { opacity: 0, y: 20, duration: 0.7, delay: 0.35, ease: 'power3.out' });
+            gsap.from('.project-info-card', { opacity: 0, x: 24, duration: 0.8, delay: 0.25, ease: 'power3.out' });
+        }
+        gsap.utils.toArray('.gallery-item--v2').forEach(function (item, i) {
+            gsap.from(item, { opacity: 0, y: 30, duration: 0.6, delay: i * 0.06, ease: 'power2.out' });
         });
         gsap.utils.toArray('.project-related-card').forEach(function (card, i) {
-            gsap.from(card, { opacity: 0, y: 20, duration: 0.5, delay: i * 0.07, ease: 'power2.out' });
+            gsap.from(card, { opacity: 0, y: 24, duration: 0.6, delay: i * 0.08, ease: 'power2.out' });
         });
     }
 })();
