@@ -100,11 +100,11 @@
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="<?= asset('js/theme.js') ?>"></script>
-    <script src="<?= asset('js/waves.js') ?>"></script>
-    <script src="<?= asset('js/main.js') ?>"></script>
+    <script src="<?= e(asset_url('js/theme.js')) ?>"></script>
+    <script src="<?= e(asset_url('js/waves.js')) ?>"></script>
+    <script src="<?= e(asset_url('js/main.js')) ?>"></script>
     <?php if (!empty($loadLightbox)): ?>
-    <script src="<?= asset('js/lightbox.js') ?>"></script>
+    <script src="<?= e(asset_url('js/lightbox.js')) ?>"></script>
     <?php endif; ?>
 </body>
 </html>

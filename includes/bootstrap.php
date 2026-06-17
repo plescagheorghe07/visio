@@ -281,7 +281,31 @@ function asset(string $path): string
 {
     $root = base_path();
     $url = ($root === '' ? '' : rtrim($root, '/')) . '/assets/' . ltrim($path, '/');
-    return str_starts_with($url, '/') ? $url : '/' . $url;
+    $url = str_starts_with($url, '/') ? $url : '/' . $url;
+
+    $file = dirname(__DIR__) . '/assets/' . ltrim(str_replace('\\', '/', $path), '/');
+    if (is_file($file)) {
+        $url .= '?v=' . filemtime($file);
+    }
+
+    return $url;
+}
+
+function document_base_url(): string
+{
+    $scheme = 'http';
+    if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+        || strtolower($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https') {
+        $scheme = 'https';
+    }
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $bp = base_path();
+    return $scheme . '://' . $host . ($bp === '' ? '/' : rtrim($bp, '/') . '/');
+}
+
+function asset_url(string $path): string
+{
+    return rtrim(document_base_url(), '/') . asset($path);
 }
 
 function absolute_url(string $path): string
