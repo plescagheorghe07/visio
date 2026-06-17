@@ -13,7 +13,7 @@ $ogImage = og_image_url($ogImage ?? null);
 $ogImageType = str_ends_with(strtolower(parse_url($ogImage, PHP_URL_PATH) ?: ''), '.png')
     ? 'image/png'
     : (str_ends_with(strtolower(parse_url($ogImage, PHP_URL_PATH) ?: ''), '.svg') ? 'image/svg+xml' : 'image/jpeg');
-$ogImagePath = __DIR__ . '/../assets/img/visio.png';
+$ogImagePath = __DIR__ . '/../assets/img/visio_notext.png';
 $ogImageWidth = 512;
 $ogImageHeight = 512;
 if (is_file($ogImagePath)) {

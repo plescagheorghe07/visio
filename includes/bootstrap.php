@@ -323,17 +323,17 @@ function absolute_url(string $path): string
 
 function brand_logo_href(): string
 {
-    return asset('img/visio.png');
+    return asset('img/visio_notext.png');
 }
 
 function site_icon_href(): string
 {
-    return asset('img/visio.png');
+    return asset('img/visio_notext.png');
 }
 
 function social_share_image_href(): string
 {
-    return asset('img/visio.png');
+    return asset('img/visio_notext.png');
 }
 
 function brand_logo_url(): string
