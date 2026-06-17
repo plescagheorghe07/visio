@@ -425,24 +425,67 @@ function project_schema_json(array $project, array $tags, string $lang): string
 
 function organization_schema_json(): string
 {
-    $lang = current_lang();
     $schema = [
         '@context' => 'https://schema.org',
-        '@type'    => 'Organization',
+        '@type'    => ['Organization', 'LocalBusiness', 'ProfessionalService'],
         'name'     => 'Visio',
         'url'      => base_url(),
         'logo'     => social_share_image_url(),
+        'image'    => social_share_image_url(),
         'description' => __('meta_description'),
+        'email'    => 'plescagheorghe07@gmail.com',
         'founder' => [
             '@type' => 'Person',
             'name'  => 'Pleșca Gheorghe',
             'email' => 'plescagheorghe07@gmail.com',
         ],
-        'areaServed' => ['MD', 'RO', 'EU'],
-        'knowsAbout' => ['PHP', 'MySQL', 'SaaS', 'React', 'Next.js', 'SEO', 'Web Development'],
+        'address' => [
+            '@type'           => 'PostalAddress',
+            'addressLocality' => 'Chișinău',
+            'addressCountry'  => 'MD',
+        ],
+        'geo' => [
+            '@type'     => 'GeoCoordinates',
+            'latitude'  => 47.0105,
+            'longitude' => 28.8638,
+        ],
+        'areaServed' => [
+            ['@type' => 'Country', 'name' => 'Moldova'],
+            ['@type' => 'Country', 'name' => 'Romania'],
+            ['@type' => 'Place', 'name' => 'European Union'],
+        ],
+        'knowsAbout' => [
+            'PHP', 'MySQL', 'PostgreSQL', 'SaaS', 'React', 'Next.js', 'Node.js',
+            'SEO', 'Web Development', 'UI/UX Design', 'GSAP Animations',
+            'Software as a Service', 'Full Stack Development', 'Web Applications',
+        ],
+        'serviceType' => [
+            'SaaS Platform Development',
+            'Full Stack Web Development',
+            'SEO Optimization',
+            'UI/UX Design',
+        ],
         'sameAs' => [
             'https://plescagheorghe.vercel.app/ro',
             'https://guestmemories.md/ro',
+        ],
+    ];
+    return json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+}
+
+function website_schema_json(): string
+{
+    $schema = [
+        '@context' => 'https://schema.org',
+        '@type'    => 'WebSite',
+        'name'     => 'Visio',
+        'url'      => base_url(),
+        'description' => __('meta_description'),
+        'inLanguage' => ['ro', 'en', 'ru'],
+        'publisher' => [
+            '@type' => 'Organization',
+            'name'  => 'Visio',
+            'logo'  => social_share_image_url(),
         ],
     ];
     return json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);

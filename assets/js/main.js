@@ -37,16 +37,16 @@
         gsap.utils.toArray('.service-card').forEach(function (card, i) {
             gsap.from(card, {
                 scrollTrigger: { trigger: card, start: 'top 88%' },
-                opacity: 0, y: 50, rotateX: 8, duration: 0.75, delay: i * 0.1, ease: 'power3.out',
+                opacity: 0, y: 50, duration: 0.75, delay: i * 0.08, ease: 'power3.out',
             });
         });
 
         gsap.utils.toArray('.project-card').forEach(function (card, i) {
             gsap.from(card, {
                 scrollTrigger: { trigger: card, start: 'top 92%' },
-                opacity: 0, y: 60, duration: 0.7, delay: (i % 3) * 0.1, ease: 'power3.out',
+                opacity: 0, y: 60, duration: 0.7, delay: (i % 2) * 0.12, ease: 'power3.out',
             });
-            var imgWrap = card.querySelector('.project-card-image');
+            var imgWrap = card.querySelector('.project-card-visual');
             if (imgWrap) initTilt(imgWrap);
         });
 
@@ -95,7 +95,101 @@
         initContactForm();
         initProjectHero();
         initScrollSpy();
+        initHashNavigation();
+        initLangSwitcher();
     });
+
+    function initLangSwitcher() {
+        var switcher = document.getElementById('langSwitcher');
+        var btn = document.getElementById('langSwitcherBtn');
+        if (!switcher || !btn) return;
+
+        btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var open = switcher.classList.toggle('open');
+            btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!switcher.contains(e.target)) {
+                switcher.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                switcher.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+
+    function initHashNavigation() {
+        var sectionIds = ['home', 'about', 'services', 'projects', 'contact'];
+        var headerOffset = 110;
+
+        function scrollToSection(id, behavior) {
+            var el = document.getElementById(id);
+            if (!el) return false;
+            var top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+            window.scrollTo({ top: Math.max(0, top), behavior: behavior || 'smooth' });
+            return true;
+        }
+
+        function isHomePage() {
+            var path = window.location.pathname.replace(/\/+$/, '') || '/';
+            return path === '/' || /^\/(ro|en|ru)$/.test(path) || /index\.php$/.test(path);
+        }
+
+        function handleHashScroll(behavior) {
+            var hash = (window.location.hash || '').replace('#', '');
+            if (hash && sectionIds.indexOf(hash) !== -1) {
+                scrollToSection(hash, behavior);
+            }
+        }
+
+        document.querySelectorAll('a[href*="#"]').forEach(function (link) {
+            var href = link.getAttribute('href') || '';
+            var hashIdx = href.indexOf('#');
+            if (hashIdx === -1) return;
+            var sectionId = href.slice(hashIdx + 1);
+            if (sectionIds.indexOf(sectionId) === -1) return;
+
+            link.addEventListener('click', function (e) {
+                var pathPart = href.slice(0, hashIdx).replace(/\/+$/, '') || '/';
+                var onHome = isHomePage();
+                var isRelativeHash = hashIdx === 0;
+                var samePage = isRelativeHash || (onHome && (
+                    pathPart === '/' || pathPart === '' ||
+                    pathPart === window.location.pathname.replace(/\/+$/, '') ||
+                    /^\/(ro|en|ru)$/.test(pathPart)
+                ));
+
+                if (samePage) {
+                    e.preventDefault();
+                    history.pushState(null, '', '#' + sectionId);
+                    scrollToSection(sectionId, 'smooth');
+                    var navPill = document.querySelector('.nav-pill');
+                    if (navPill) navPill.classList.remove('open');
+                }
+            });
+        });
+
+        if (window.location.hash) {
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    handleHashScroll('auto');
+                    setTimeout(function () { handleHashScroll('auto'); }, 300);
+                    setTimeout(function () { handleHashScroll('auto'); }, 800);
+                });
+            });
+        }
+
+        window.addEventListener('hashchange', function () {
+            handleHashScroll('smooth');
+        });
+    }
 
     function initHeader() {
         var header = document.getElementById('siteHeader');
