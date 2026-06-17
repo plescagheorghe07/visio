@@ -9,10 +9,15 @@
         if (typeof gsap === 'undefined') return;
         gsap.registerPlugin(ScrollTrigger);
 
-        gsap.from('.hero-badge', { opacity: 0, y: 30, duration: 0.8, delay: 0.15, ease: 'power3.out' });
-        gsap.from('.hero-title .hero-line', { opacity: 0, y: 60, duration: 1, delay: 0.3, stagger: 0.12, ease: 'power4.out' });
-        gsap.from('.hero-subtitle', { opacity: 0, y: 30, duration: 0.8, delay: 0.55, ease: 'power3.out' });
-        gsap.from('.hero-actions .btn', { opacity: 0, y: 24, duration: 0.7, delay: 0.75, stagger: 0.1, ease: 'back.out(1.4)' });
+        gsap.from('.hero-badge-row', { opacity: 0, y: 30, duration: 0.8, delay: 0.1, ease: 'power3.out' });
+        gsap.from('.hero-line--1', { opacity: 0, y: 70, duration: 1, delay: 0.25, ease: 'power4.out' });
+        gsap.from('.hero-line--2', { opacity: 0, y: 70, duration: 1, delay: 0.38, ease: 'power4.out' });
+        gsap.from('.hero-line--3', { opacity: 0, y: 70, duration: 1, delay: 0.5, ease: 'power4.out' });
+        gsap.from('.hero-subtitle', { opacity: 0, y: 30, duration: 0.8, delay: 0.65, ease: 'power3.out' });
+        gsap.from('.hero-actions .btn', { opacity: 0, y: 24, duration: 0.7, delay: 0.8, stagger: 0.1, ease: 'back.out(1.4)' });
+        gsap.from('.hero-quicknav-link', { opacity: 0, x: -20, duration: 0.6, delay: 0.95, stagger: 0.08, ease: 'power2.out' });
+        gsap.from('.hero-orbit-wrap', { opacity: 0, scale: 0.85, duration: 1.2, delay: 0.4, ease: 'back.out(1.5)' });
+        gsap.from('.hero-stats-bar .stat-card', { opacity: 0, y: 30, duration: 0.7, delay: 1, stagger: 0.08, ease: 'power3.out' });
 
         gsap.utils.toArray('.section-label').forEach(function (el) {
             gsap.from(el, {
@@ -27,11 +32,27 @@
             });
         });
 
-        gsap.utils.toArray('.stat-card').forEach(function (card, i) {
+        gsap.utils.toArray('.stat-card[data-count]').forEach(function (card, i) {
             gsap.from(card, {
                 scrollTrigger: { trigger: card, start: 'top 88%' },
                 opacity: 0, y: 40, scale: 0.95, duration: 0.65, delay: i * 0.08, ease: 'back.out(1.5)',
             });
+        });
+
+        gsap.utils.toArray('.value-card').forEach(function (card, i) {
+            gsap.from(card, {
+                scrollTrigger: { trigger: card, start: 'top 88%' },
+                opacity: 0, y: 40, duration: 0.7, delay: i * 0.1, ease: 'power3.out',
+            });
+        });
+
+        gsap.utils.toArray('.project-showcase').forEach(function (card, i) {
+            gsap.from(card, {
+                scrollTrigger: { trigger: card, start: 'top 90%' },
+                opacity: 0, x: i % 2 === 0 ? -40 : 40, duration: 0.85, ease: 'power3.out',
+            });
+            var imgWrap = card.querySelector('.project-showcase-visual');
+            if (imgWrap) initTilt(imgWrap);
         });
 
         gsap.utils.toArray('.service-card').forEach(function (card, i) {
@@ -41,18 +62,9 @@
             });
         });
 
-        gsap.utils.toArray('.project-card').forEach(function (card, i) {
-            gsap.from(card, {
-                scrollTrigger: { trigger: card, start: 'top 92%' },
-                opacity: 0, y: 60, duration: 0.7, delay: (i % 2) * 0.12, ease: 'power3.out',
-            });
-            var imgWrap = card.querySelector('.project-card-visual');
-            if (imgWrap) initTilt(imgWrap);
-        });
-
-        gsap.from('.about-visual', { scrollTrigger: { trigger: '.about-grid', start: 'top 78%' }, opacity: 0, x: -50, duration: 1, ease: 'power3.out' });
-        gsap.from('.about-text', { scrollTrigger: { trigger: '.about-grid', start: 'top 78%' }, opacity: 0, x: 50, duration: 1, ease: 'power3.out' });
-        gsap.from('.contact-form', { scrollTrigger: { trigger: '.contact-grid', start: 'top 78%' }, opacity: 0, y: 40, duration: 0.8, ease: 'power3.out' });
+        gsap.from('.about-detail', { scrollTrigger: { trigger: '.about-detail', start: 'top 80%' }, opacity: 0, y: 40, duration: 0.9, ease: 'power3.out' });
+        gsap.from('.contact-form--v2', { scrollTrigger: { trigger: '.contact-layout', start: 'top 78%' }, opacity: 0, y: 40, duration: 0.8, ease: 'power3.out' });
+        gsap.from('.contact-card', { scrollTrigger: { trigger: '.contact-cards', start: 'top 85%' }, opacity: 0, x: -20, duration: 0.6, stagger: 0.1, ease: 'power2.out' });
 
         document.querySelectorAll('.stat-card[data-count]').forEach(function (card) {
             var target = parseInt(card.dataset.count, 10);
@@ -71,9 +83,9 @@
 
         gsap.to('.hero-orb--1', { x: 40, y: -30, duration: 6, repeat: -1, yoyo: true, ease: 'sine.inOut' });
         gsap.to('.hero-orb--2', { x: -30, y: 40, duration: 7, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-        gsap.to('.about-card--1', { y: -12, duration: 3, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-        gsap.to('.about-card--2', { y: 10, duration: 2.5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-        gsap.to('.about-card--3', { y: -8, duration: 3.5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+        gsap.to('.hero-orb--3', { x: 20, y: 20, duration: 5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+        gsap.to('.hero-orbit-ring--1', { rotate: 360, duration: 30, repeat: -1, ease: 'none', transformOrigin: '50% 50%' });
+        gsap.to('.hero-orbit-ring--2', { rotate: -360, duration: 20, repeat: -1, ease: 'none', transformOrigin: '50% 50%' });
 
         var glow = document.querySelector('.cursor-glow');
         if (glow && window.matchMedia('(pointer:fine)').matches) {
@@ -352,10 +364,19 @@
     }
 
     function initProjectHero() {
+        if (typeof gsap === 'undefined') return;
         var title = document.querySelector('.project-hero-title');
-        if (!title || typeof gsap === 'undefined') return;
-        gsap.from(title, { opacity: 0, y: 40, duration: 0.9, ease: 'power3.out' });
-        gsap.from('.project-hero-desc', { opacity: 0, y: 24, duration: 0.8, delay: 0.15, ease: 'power3.out' });
-        gsap.from('.gallery-item', { opacity: 0, y: 30, duration: 0.6, stagger: 0.08, delay: 0.2, ease: 'power2.out' });
+        if (title) {
+            gsap.from('.project-breadcrumb', { opacity: 0, y: -10, duration: 0.6, ease: 'power2.out' });
+            gsap.from(title, { opacity: 0, y: 40, duration: 0.9, delay: 0.1, ease: 'power3.out' });
+            gsap.from('.project-hero-desc', { opacity: 0, y: 24, duration: 0.8, delay: 0.2, ease: 'power3.out' });
+            gsap.from('.project-info-card', { opacity: 0, x: 30, duration: 0.8, delay: 0.3, ease: 'power3.out' });
+        }
+        gsap.utils.toArray('.gallery-item--v2').forEach(function (item, i) {
+            gsap.from(item, { opacity: 0, y: 30, duration: 0.6, delay: i * 0.06, ease: 'power2.out' });
+        });
+        gsap.utils.toArray('.project-related-card').forEach(function (card, i) {
+            gsap.from(card, { opacity: 0, y: 24, duration: 0.6, delay: i * 0.08, ease: 'power2.out' });
+        });
     }
 })();
