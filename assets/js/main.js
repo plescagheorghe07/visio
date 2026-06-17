@@ -9,14 +9,10 @@
         if (typeof gsap === 'undefined') return;
         gsap.registerPlugin(ScrollTrigger);
 
-        gsap.from('.hero-topline', { opacity: 0, y: 20, duration: 0.7, delay: 0.1, ease: 'power3.out' });
-        gsap.from('.hero-line--1', { opacity: 0, y: 60, duration: 0.9, delay: 0.2, ease: 'power4.out' });
-        gsap.from('.hero-line--2', { opacity: 0, y: 60, duration: 0.9, delay: 0.32, ease: 'power4.out' });
-        gsap.from('.hero-line--3', { opacity: 0, y: 60, duration: 0.9, delay: 0.44, ease: 'power4.out' });
-        gsap.from('.hero-subtitle--v3', { opacity: 0, y: 24, duration: 0.7, delay: 0.55, ease: 'power3.out' });
-        gsap.from('.hero-actions--v3 .btn', { opacity: 0, y: 20, duration: 0.6, delay: 0.68, stagger: 0.08, ease: 'back.out(1.4)' });
-        gsap.from('.hero-pill', { opacity: 0, y: 12, duration: 0.5, delay: 0.82, stagger: 0.06, ease: 'power2.out' });
-        gsap.from('.hero-glass-card', { opacity: 0, y: 30, scale: 0.96, duration: 0.7, delay: 0.35, stagger: 0.1, ease: 'back.out(1.5)' });
+        gsap.from('.hero-badge', { opacity: 0, y: 30, duration: 0.8, delay: 0.15, ease: 'power3.out' });
+        gsap.from('.hero-title .hero-line', { opacity: 0, y: 60, duration: 1, delay: 0.3, stagger: 0.12, ease: 'power4.out' });
+        gsap.from('.hero-subtitle', { opacity: 0, y: 30, duration: 0.8, delay: 0.55, ease: 'power3.out' });
+        gsap.from('.hero-actions .btn', { opacity: 0, y: 24, duration: 0.7, delay: 0.75, stagger: 0.1, ease: 'back.out(1.4)' });
 
         gsap.utils.toArray('.section-label').forEach(function (el) {
             gsap.from(el, {
@@ -31,41 +27,34 @@
             });
         });
 
-        gsap.utils.toArray('.stat-card[data-count]').forEach(function (card, i) {
+        gsap.utils.toArray('.stat-card').forEach(function (card, i) {
             gsap.from(card, {
                 scrollTrigger: { trigger: card, start: 'top 88%' },
                 opacity: 0, y: 40, scale: 0.95, duration: 0.65, delay: i * 0.08, ease: 'back.out(1.5)',
             });
         });
 
-        gsap.utils.toArray('.value-card--v3').forEach(function (card, i) {
-            gsap.from(card, {
-                scrollTrigger: { trigger: card, start: 'top 88%' },
-                opacity: 0, x: -24, duration: 0.65, delay: i * 0.08, ease: 'power3.out',
-            });
-        });
-
-        gsap.utils.toArray('.project-showcase').forEach(function (card, i) {
-            gsap.from(card, {
-                scrollTrigger: { trigger: card, start: 'top 90%' },
-                opacity: 0, x: i % 2 === 0 ? -40 : 40, duration: 0.85, ease: 'power3.out',
-            });
-            var imgWrap = card.querySelector('.project-showcase-visual');
-            if (imgWrap) initTilt(imgWrap);
-        });
-
         gsap.utils.toArray('.service-card').forEach(function (card, i) {
             gsap.from(card, {
                 scrollTrigger: { trigger: card, start: 'top 88%' },
-                opacity: 0, y: 50, duration: 0.75, delay: i * 0.08, ease: 'power3.out',
+                opacity: 0, y: 50, rotateX: 8, duration: 0.75, delay: i * 0.1, ease: 'power3.out',
             });
         });
 
-        gsap.from('.about-v3-content', { scrollTrigger: { trigger: '.about-v3-grid', start: 'top 80%' }, opacity: 0, x: 30, duration: 0.9, ease: 'power3.out' });
-        gsap.from('.contact-form--v2', { scrollTrigger: { trigger: '.contact-layout', start: 'top 78%' }, opacity: 0, y: 40, duration: 0.8, ease: 'power3.out' });
-        gsap.from('.contact-card', { scrollTrigger: { trigger: '.contact-cards', start: 'top 85%' }, opacity: 0, x: -20, duration: 0.6, stagger: 0.1, ease: 'power2.out' });
+        gsap.utils.toArray('.project-card').forEach(function (card, i) {
+            gsap.from(card, {
+                scrollTrigger: { trigger: card, start: 'top 92%' },
+                opacity: 0, y: 60, duration: 0.7, delay: (i % 3) * 0.1, ease: 'power3.out',
+            });
+            var imgWrap = card.querySelector('.project-card-image');
+            if (imgWrap) initTilt(imgWrap);
+        });
 
-        document.querySelectorAll('[data-count]').forEach(function (card) {
+        gsap.from('.about-visual', { scrollTrigger: { trigger: '.about-grid', start: 'top 78%' }, opacity: 0, x: -50, duration: 1, ease: 'power3.out' });
+        gsap.from('.about-text', { scrollTrigger: { trigger: '.about-grid', start: 'top 78%' }, opacity: 0, x: 50, duration: 1, ease: 'power3.out' });
+        gsap.from('.contact-form', { scrollTrigger: { trigger: '.contact-grid', start: 'top 78%' }, opacity: 0, y: 40, duration: 0.8, ease: 'power3.out' });
+
+        document.querySelectorAll('.stat-card[data-count]').forEach(function (card) {
             var target = parseInt(card.dataset.count, 10);
             var numEl = card.querySelector('.stat-number');
             if (!numEl) return;
@@ -82,6 +71,9 @@
 
         gsap.to('.hero-orb--1', { x: 40, y: -30, duration: 6, repeat: -1, yoyo: true, ease: 'sine.inOut' });
         gsap.to('.hero-orb--2', { x: -30, y: 40, duration: 7, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+        gsap.to('.about-card--1', { y: -12, duration: 3, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+        gsap.to('.about-card--2', { y: 10, duration: 2.5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+        gsap.to('.about-card--3', { y: -8, duration: 3.5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
 
         var glow = document.querySelector('.cursor-glow');
         if (glow && window.matchMedia('(pointer:fine)').matches) {
@@ -103,101 +95,7 @@
         initContactForm();
         initProjectHero();
         initScrollSpy();
-        initHashNavigation();
-        initLangSwitcher();
     });
-
-    function initLangSwitcher() {
-        var switcher = document.getElementById('langSwitcher');
-        var btn = document.getElementById('langSwitcherBtn');
-        if (!switcher || !btn) return;
-
-        btn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            var open = switcher.classList.toggle('open');
-            btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        });
-
-        document.addEventListener('click', function (e) {
-            if (!switcher.contains(e.target)) {
-                switcher.classList.remove('open');
-                btn.setAttribute('aria-expanded', 'false');
-            }
-        });
-
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') {
-                switcher.classList.remove('open');
-                btn.setAttribute('aria-expanded', 'false');
-            }
-        });
-    }
-
-    function initHashNavigation() {
-        var sectionIds = ['home', 'about', 'services', 'projects', 'contact'];
-        var headerOffset = 110;
-
-        function scrollToSection(id, behavior) {
-            var el = document.getElementById(id);
-            if (!el) return false;
-            var top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
-            window.scrollTo({ top: Math.max(0, top), behavior: behavior || 'smooth' });
-            return true;
-        }
-
-        function isHomePage() {
-            var path = window.location.pathname.replace(/\/+$/, '') || '/';
-            return path === '/' || /^\/(ro|en|ru)$/.test(path) || /index\.php$/.test(path);
-        }
-
-        function handleHashScroll(behavior) {
-            var hash = (window.location.hash || '').replace('#', '');
-            if (hash && sectionIds.indexOf(hash) !== -1) {
-                scrollToSection(hash, behavior);
-            }
-        }
-
-        document.querySelectorAll('a[href*="#"]').forEach(function (link) {
-            var href = link.getAttribute('href') || '';
-            var hashIdx = href.indexOf('#');
-            if (hashIdx === -1) return;
-            var sectionId = href.slice(hashIdx + 1);
-            if (sectionIds.indexOf(sectionId) === -1) return;
-
-            link.addEventListener('click', function (e) {
-                var pathPart = href.slice(0, hashIdx).replace(/\/+$/, '') || '/';
-                var onHome = isHomePage();
-                var isRelativeHash = hashIdx === 0;
-                var samePage = isRelativeHash || (onHome && (
-                    pathPart === '/' || pathPart === '' ||
-                    pathPart === window.location.pathname.replace(/\/+$/, '') ||
-                    /^\/(ro|en|ru)$/.test(pathPart)
-                ));
-
-                if (samePage) {
-                    e.preventDefault();
-                    history.pushState(null, '', '#' + sectionId);
-                    scrollToSection(sectionId, 'smooth');
-                    var navPill = document.querySelector('.nav-pill');
-                    if (navPill) navPill.classList.remove('open');
-                }
-            });
-        });
-
-        if (window.location.hash) {
-            requestAnimationFrame(function () {
-                requestAnimationFrame(function () {
-                    handleHashScroll('auto');
-                    setTimeout(function () { handleHashScroll('auto'); }, 300);
-                    setTimeout(function () { handleHashScroll('auto'); }, 800);
-                });
-            });
-        }
-
-        window.addEventListener('hashchange', function () {
-            handleHashScroll('smooth');
-        });
-    }
 
     function initHeader() {
         var header = document.getElementById('siteHeader');
@@ -360,21 +258,10 @@
     }
 
     function initProjectHero() {
-        if (typeof gsap === 'undefined') return;
         var title = document.querySelector('.project-hero-title');
-        if (title) {
-            gsap.from('.project-breadcrumb', { opacity: 0, y: -10, duration: 0.6, ease: 'power2.out' });
-            gsap.from(title, { opacity: 0, y: 40, duration: 0.9, delay: 0.1, ease: 'power3.out' });
-            gsap.from('.project-hero-desc', { opacity: 0, y: 24, duration: 0.8, delay: 0.2, ease: 'power3.out' });
-            gsap.from('.project-meta-strip', { opacity: 0, y: 16, duration: 0.6, delay: 0.25, ease: 'power2.out' });
-            gsap.from('.project-action-bar', { opacity: 0, y: 20, duration: 0.7, delay: 0.35, ease: 'power3.out' });
-            gsap.from('.project-hero-tags .tag', { opacity: 0, y: 10, duration: 0.4, delay: 0.45, stagger: 0.04, ease: 'power2.out' });
-        }
-        gsap.utils.toArray('.gallery-item--v2').forEach(function (item, i) {
-            gsap.from(item, { opacity: 0, y: 30, duration: 0.6, delay: i * 0.06, ease: 'power2.out' });
-        });
-        gsap.utils.toArray('.project-related-card').forEach(function (card, i) {
-            gsap.from(card, { opacity: 0, y: 24, duration: 0.6, delay: i * 0.08, ease: 'power2.out' });
-        });
+        if (!title || typeof gsap === 'undefined') return;
+        gsap.from(title, { opacity: 0, y: 40, duration: 0.9, ease: 'power3.out' });
+        gsap.from('.project-hero-desc', { opacity: 0, y: 24, duration: 0.8, delay: 0.15, ease: 'power3.out' });
+        gsap.from('.gallery-item', { opacity: 0, y: 30, duration: 0.6, stagger: 0.08, delay: 0.2, ease: 'power2.out' });
     }
 })();

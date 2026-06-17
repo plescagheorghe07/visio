@@ -5,10 +5,6 @@
 /** @var string|null $extraSchema */
 /** @var string|null $ogImage */
 $lang = current_lang();
-$isHomePage = empty($_GET['slug']);
-$navHash = function (string $section) use ($isHomePage): string {
-    return $isHomePage ? '#' . $section : home_href() . '#' . $section;
-};
 $pageTitle = $pageTitle ?? __('meta_title');
 $pageDescription = $pageDescription ?? __('meta_description');
 $pageKeywords = $pageKeywords ?? __('meta_keywords');
@@ -50,13 +46,15 @@ foreach (app_config('languages', ['ro', 'en', 'ru']) as $code) {
             var stored = localStorage.getItem(key);
             if (stored === 'dark' || stored === 'light') {
                 theme = stored;
+            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                theme = 'dark';
             }
         } catch (e) {}
         document.documentElement.setAttribute('data-theme', theme);
     })();
     </script>
     <style>
-        html, body { background-color: #f8f9fc; color-scheme: light; }
+        html, body { background-color: #fafafa; color-scheme: light; }
         html[data-theme="dark"], html[data-theme="dark"] body { background-color: #0a0a0f; color-scheme: dark; }
     </style>
     <title><?= e($pageTitle) ?></title>
@@ -65,10 +63,6 @@ foreach (app_config('languages', ['ro', 'en', 'ru']) as $code) {
     <meta name="author" content="Visio — Pleșca Gheorghe">
     <meta name="robots" content="index, follow">
     <meta name="google-site-verification" content="O06VlzBh8s8lIiWbt8i9QZAHq_2QikI5hahmfzUH6Go">
-    <meta name="geo.region" content="MD-CU">
-    <meta name="geo.placename" content="Chișinău, Moldova">
-    <meta name="geo.position" content="47.0105;28.8638">
-    <meta name="ICBM" content="47.0105, 28.8638">
     <link rel="canonical" href="<?= e($canonicalUrl) ?>">
     <link rel="icon" href="<?= site_icon_href() ?>" type="image/png">
     <link rel="shortcut icon" href="<?= site_icon_href() ?>" type="image/png">
@@ -98,9 +92,7 @@ foreach (app_config('languages', ['ro', 'en', 'ru']) as $code) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= asset('css/main.css') ?>">
-    <link rel="stylesheet" href="<?= asset('css/v2.css') ?>">
     <script type="application/ld+json"><?= organization_schema_json() ?></script>
-    <script type="application/ld+json"><?= website_schema_json() ?></script>
     <?php if (!empty($extraSchema)): ?>
     <script type="application/ld+json"><?= $extraSchema ?></script>
     <?php endif; ?>
@@ -119,38 +111,23 @@ foreach (app_config('languages', ['ro', 'en', 'ru']) as $code) {
 
             <nav class="nav-pill" aria-label="Main">
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="<?= e($navHash('home')) ?>" class="nav-link" data-section="home"><?= e(__('nav_home')) ?></a></li>
-                    <li><a href="<?= e($navHash('about')) ?>" class="nav-link" data-section="about"><?= e(__('nav_about')) ?></a></li>
-                    <li><a href="<?= e($navHash('services')) ?>" class="nav-link" data-section="services"><?= e(__('nav_services')) ?></a></li>
-                    <li><a href="<?= e($navHash('projects')) ?>" class="nav-link" data-section="projects"><?= e(__('nav_projects')) ?></a></li>
-                    <li><a href="<?= e($navHash('contact')) ?>" class="nav-link nav-link--cta" data-section="contact"><?= e(__('nav_contact')) ?></a></li>
+                    <li><a href="<?= home_href() ?>#home" class="nav-link" data-section="home"><?= e(__('nav_home')) ?></a></li>
+                    <li><a href="<?= home_href() ?>#about" class="nav-link" data-section="about"><?= e(__('nav_about')) ?></a></li>
+                    <li><a href="<?= home_href() ?>#services" class="nav-link" data-section="services"><?= e(__('nav_services')) ?></a></li>
+                    <li><a href="<?= home_href() ?>#projects" class="nav-link" data-section="projects"><?= e(__('nav_projects')) ?></a></li>
+                    <li><a href="<?= home_href() ?>#contact" class="nav-link nav-link--cta" data-section="contact"><?= e(__('nav_contact')) ?></a></li>
                 </ul>
             </nav>
 
             <div class="header-actions">
-                <div class="lang-switcher" id="langSwitcher">
-                    <button type="button" class="lang-switcher-btn" id="langSwitcherBtn" aria-expanded="false" aria-haspopup="listbox" aria-label="<?= e(__('lang_switch')) ?>">
-                        <svg class="lang-globe" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                        <span class="lang-current"><?= strtoupper($lang) ?></span>
-                        <svg class="lang-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-                    </button>
-                    <ul class="lang-dropdown" role="listbox" aria-label="<?= e(__('lang_switch')) ?>">
-                        <?php foreach (app_config('languages') as $code):
-                            $href = !empty($_GET['slug'])
-                                ? project_href((string) $_GET['slug'], $code)
-                                : home_href($code);
-                        ?>
-                        <li role="option" aria-selected="<?= $lang === $code ? 'true' : 'false' ?>">
-                            <a href="<?= e($href) ?>" class="lang-option <?= $lang === $code ? 'is-active' : '' ?>" hreflang="<?= e($code) ?>" lang="<?= e($code) ?>">
-                                <span class="lang-option-code"><?= strtoupper($code) ?></span>
-                                <span class="lang-option-name"><?= e(__('lang_' . $code)) ?></span>
-                                <?php if ($lang === $code): ?>
-                                <svg class="lang-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
-                                <?php endif; ?>
-                            </a>
-                        </li>
-                        <?php endforeach; ?>
-                    </ul>
+                <div class="lang-switcher lang-switcher--pill">
+                    <?php foreach (app_config('languages') as $code):
+                        $href = !empty($_GET['slug'])
+                            ? project_href((string) $_GET['slug'], $code)
+                            : home_href($code);
+                    ?>
+                    <a href="<?= e($href) ?>" class="lang-btn <?= $lang === $code ? 'active' : '' ?>" hreflang="<?= e($code) ?>"><?= strtoupper($code) ?></a>
+                    <?php endforeach; ?>
                 </div>
                 <button class="theme-toggle" id="themeToggle" aria-label="<?= e(__('theme_dark')) ?>">
                     <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
