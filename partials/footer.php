@@ -79,6 +79,9 @@
                         'fullstack', 'php', 'react', 'nextjs', 'seo', 'design', 'software', 'webdesign',
                         'aplicatiweb', 'platforme', 'it', 'tech', 'startup', 'crearewebsite', 'agentieweb',
                         'developer', 'mysql', 'postgresql', 'gsap', 'uiux', 'enterprise', 'edtech', 'fintech',
+                        'crearesite', 'dezvoltatorweb', 'agentiesoftware', 'platformasaas', 'aplicatiemobila',
+                        'magazinonline', 'portalsite', 'optimizareseo', 'designmodern', 'fullstackdeveloper',
+                        'programarechisinau', 'itmoldova', 'webdeveloper', 'softwaremoldova', 'hosting',
                     ];
                     foreach ($seoTags as $tag):
                     ?>

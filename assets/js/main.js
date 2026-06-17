@@ -13,6 +13,23 @@
         gsap.from('.hero-line', { opacity: 0, y: 60, duration: 1, delay: 0.3, stagger: 0.12, ease: 'power4.out' });
         gsap.from('.hero-subtitle', { opacity: 0, y: 30, duration: 0.8, delay: 0.55, ease: 'power3.out' });
         gsap.from('.hero-actions .btn', { opacity: 0, y: 24, duration: 0.7, delay: 0.75, stagger: 0.1, ease: 'back.out(1.4)' });
+        gsap.from('.hero-panel', { opacity: 0, x: 60, duration: 1, delay: 0.5, ease: 'power3.out' });
+        gsap.from('.hero-float__chip', { opacity: 0, y: 20, duration: 0.6, delay: 0.8, stagger: 0.12, ease: 'back.out(1.5)' });
+        gsap.from('.trust-bar__item', { opacity: 0, y: 16, duration: 0.5, delay: 0.3, stagger: 0.08, ease: 'power2.out' });
+
+        gsap.utils.toArray('.process-step').forEach(function (el, i) {
+            gsap.from(el, {
+                scrollTrigger: { trigger: el, start: 'top 90%' },
+                opacity: 0, y: 40, duration: 0.65, delay: i * 0.1, ease: 'power3.out',
+            });
+        });
+
+        gsap.utils.toArray('.faq-item').forEach(function (el, i) {
+            gsap.from(el, {
+                scrollTrigger: { trigger: el, start: 'top 92%' },
+                opacity: 0, x: -20, duration: 0.5, delay: i * 0.06, ease: 'power2.out',
+            });
+        });
 
         gsap.utils.toArray('.section-label').forEach(function (el) {
             gsap.from(el, {
@@ -337,7 +354,7 @@
         var navLinks = document.querySelectorAll('.nav-link[data-section]');
         if (!navLinks.length) return;
 
-        var sectionIds = ['home', 'about', 'services', 'projects', 'contact'];
+        var sectionIds = ['home', 'about', 'services', 'process', 'projects', 'faq', 'contact'];
         var sections = sectionIds.map(function (id) {
             return document.getElementById(id);
         }).filter(Boolean);
