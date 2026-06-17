@@ -598,13 +598,12 @@ img { max-width: 100%; display: block; }
     flex: 1;
 }
 .service-features li {
+    position: relative;
+    padding-left: 0;
     font-size: 0.85rem;
     color: var(--text-secondary);
     margin-bottom: 7px;
     line-height: 1.4;
-}
-.service-features li::before {
-    content: none;
 }
 .service-features--checks li {
     display: flex;
@@ -612,11 +611,8 @@ img { max-width: 100%; display: block; }
     gap: 10px;
     padding-left: 0;
 }
-.service-features--checks li svg {
-    flex-shrink: 0;
-    margin-top: 2px;
-    color: var(--accent);
-}
+.service-features--checks li::before { display: none; }
+.service-features li::before { display: none; }
 .service-tags {
     display: flex;
     flex-wrap: wrap;

@@ -59,14 +59,14 @@ $loadLightbox = count($galleryItems) > 0;
 require __DIR__ . '/partials/header.php';
 ?>
 
-<div class="project-page project-page--v2">
-    <section class="project-hero-v2">
+<div class="project-page project-page--v3">
+    <section class="project-hero-v3">
         <div class="project-hero-bg">
             <img src="<?= e($coverSrc) ?>" alt="" aria-hidden="true" loading="eager"
                  onerror="this.style.display='none'">
             <div class="project-hero-bg-overlay"></div>
         </div>
-        <div class="container project-hero-inner">
+        <div class="container project-hero-v3-inner">
             <nav class="project-breadcrumb" aria-label="Breadcrumb">
                 <a href="<?= home_href() ?>">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
@@ -78,62 +78,66 @@ require __DIR__ . '/partials/header.php';
                 <span aria-current="page"><?= e($title) ?></span>
             </nav>
 
-            <div class="project-hero-grid">
-                <div class="project-hero-main">
-                    <span class="section-label section-label--light"><?= e(__('projects_label')) ?></span>
-                    <h1 class="project-hero-title"><?= e($title) ?></h1>
-                    <p class="project-hero-desc"><?= e($description) ?></p>
+            <span class="section-label section-label--light">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                <?= e(__('projects_label')) ?>
+            </span>
+            <h1 class="project-hero-title"><?= e($title) ?></h1>
+            <p class="project-hero-desc"><?= e($description) ?></p>
 
-                    <?php if ($tags): ?>
-                    <div class="project-hero-tags">
-                        <?php foreach ($tags as $tag): ?>
-                        <span class="tag tag--hero"><?= e($tag) ?></span>
-                        <?php endforeach; ?>
-                    </div>
-                    <?php endif; ?>
-
-                    <div class="project-action-bar">
-                        <?php if (!empty($project['website_link'])): ?>
-                        <a href="<?= e($project['website_link']) ?>" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--lg project-action-primary">
-                            <?= e(__('project_website')) ?> ↗
-                        </a>
-                        <?php endif; ?>
-                        <?php if (!empty($project['github_link'])): ?>
-                        <a href="<?= e($project['github_link']) ?>" target="_blank" rel="noopener noreferrer" class="btn btn--outline btn--lg btn--light">
-                            <?= e(__('project_github')) ?>
-                        </a>
-                        <?php endif; ?>
-                        <a href="<?= home_href() ?>#contact" class="btn btn--outline btn--lg btn--light">
-                            <?= e(__('hero_cta_contact')) ?>
-                        </a>
-                        <a href="<?= home_href() ?>#projects" class="project-back-btn">
-                            ← <?= e(__('project_back')) ?>
-                        </a>
-                    </div>
+            <div class="project-meta-strip">
+                <div class="project-meta-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/></svg>
+                    <span><?= e($tags[0] ?? 'Web Application') ?></span>
                 </div>
-
-                <aside class="project-info-card">
-                    <h2><?= e(__('project_details')) ?></h2>
-                    <dl class="project-info-list">
-                        <div class="project-info-item">
-                            <dt><?= e(__('project_type')) ?></dt>
-                            <dd><?= e($tags[0] ?? 'Web Application') ?></dd>
-                        </div>
-                        <div class="project-info-item">
-                            <dt><?= e(__('project_tech_stack')) ?></dt>
-                            <dd><?= count($tags) ?> <?= e(__('project_tech_count')) ?></dd>
-                        </div>
-                        <div class="project-info-item">
-                            <dt><?= e(__('project_location')) ?></dt>
-                            <dd><?= e(__('contact_location')) ?></dd>
-                        </div>
-                        <div class="project-info-item">
-                            <dt><?= e(__('project_agency')) ?></dt>
-                            <dd>Visio — Pleșca Gheorghe</dd>
-                        </div>
-                    </dl>
-                </aside>
+                <div class="project-meta-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    <span><?= count($tags) ?> <?= e(__('project_tech_count')) ?></span>
+                </div>
+                <div class="project-meta-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <span><?= e(__('contact_location')) ?></span>
+                </div>
+                <div class="project-meta-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg>
+                    <span>Visio</span>
+                </div>
             </div>
+
+            <div class="project-action-bar">
+                <div class="project-action-group project-action-group--primary">
+                    <?php if (!empty($project['website_link'])): ?>
+                    <a href="<?= e($project['website_link']) ?>" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--lg">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        <?= e(__('project_website')) ?>
+                    </a>
+                    <?php endif; ?>
+                    <?php if (!empty($project['github_link'])): ?>
+                    <a href="<?= e($project['github_link']) ?>" target="_blank" rel="noopener noreferrer" class="btn btn--outline btn--lg btn--light">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A8.205 8.205 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                        <?= e(__('project_github')) ?>
+                    </a>
+                    <?php endif; ?>
+                </div>
+                <div class="project-action-group project-action-group--secondary">
+                    <a href="<?= home_href() ?>#projects" class="btn btn--ghost btn--light">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        <?= e(__('project_back')) ?>
+                    </a>
+                    <a href="<?= home_href() ?>#contact" class="btn btn--ghost btn--light">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        <?= e(__('hero_cta_contact')) ?>
+                    </a>
+                </div>
+            </div>
+
+            <?php if ($tags): ?>
+            <div class="project-hero-tags">
+                <?php foreach ($tags as $tag): ?>
+                <span class="tag tag--hero"><?= e($tag) ?></span>
+                <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
         </div>
     </section>
 

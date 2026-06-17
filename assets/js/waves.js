@@ -62,7 +62,7 @@
     }
 
     function initTechMarquee() {
-        /* tech marquee removed — using static .tech-cloud */
+        /* replaced by static tech-cloud grid */
     }
 
     function initOrbitNodes() {
