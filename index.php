@@ -306,38 +306,39 @@ $aboutFeatures = [
             <article class="service-card service-card--v2 fx-border-glow" data-wave-anchor>
                 <div class="service-card__stripe"></div>
                 <div class="service-card__content">
-                    <span class="service-num"><?= $svc['num'] ?></span>
-                    <div class="service-icon service-icon--<?= e($svc['icon']) ?>">
-                        <?php if ($svc['icon'] === 'cloud'): ?>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
-                        <?php elseif ($svc['icon'] === 'code'): ?>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                        <?php elseif ($svc['icon'] === 'search'): ?>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                        <?php else: ?>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="19" cy="17" r="2"/><circle cx="6" cy="12" r="2"/><path d="M12 6.5V12l4.5 2"/></svg>
-                        <?php endif; ?>
+                    <div class="service-card__head">
+                        <span class="service-num"><?= $svc['num'] ?></span>
+                        <div class="service-icon service-icon--<?= e($svc['icon']) ?>">
+                            <?php if ($svc['icon'] === 'cloud'): ?>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                            <?php elseif ($svc['icon'] === 'code'): ?>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            <?php elseif ($svc['icon'] === 'search'): ?>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                            <?php else: ?>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="19" cy="17" r="2"/><circle cx="6" cy="12" r="2"/><path d="M12 6.5V12l4.5 2"/></svg>
+                            <?php endif; ?>
+                        </div>
                     </div>
-                </div>
-                <h3><?= e(__($svc['title'])) ?></h3>
-                <p class="service-card__desc"><?= e(__($svc['desc'])) ?></p>
-                <ul class="service-features">
-                    <?php foreach ($svc['features'] as $fKey): ?>
-                    <li>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                        <?= e(__($fKey)) ?>
-                    </li>
-                    <?php endforeach; ?>
-                </ul>
-                <div class="service-tags">
-                    <?php foreach ($svc['tags'] as $tag): ?>
-                    <span class="tag"><?= e($tag) ?></span>
-                    <?php endforeach; ?>
-                </div>
-                <a href="#contact" class="service-card__link">
-                    <?= e(__('service_learn_more')) ?>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
+                    <h3><?= e(__($svc['title'])) ?></h3>
+                    <p class="service-card__desc"><?= e(__($svc['desc'])) ?></p>
+                    <ul class="service-features">
+                        <?php foreach ($svc['features'] as $fKey): ?>
+                        <li>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                            <?= e(__($fKey)) ?>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <div class="service-tags">
+                        <?php foreach ($svc['tags'] as $tag): ?>
+                        <span class="tag"><?= e($tag) ?></span>
+                        <?php endforeach; ?>
+                    </div>
+                    <a href="#contact" class="service-card__link">
+                        <?= e(__('service_learn_more')) ?>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
                 </div>
             </article>
             <?php endforeach; ?>
@@ -402,25 +403,30 @@ $aboutFeatures = [
             <h2 class="section-title"><?= e(__('process_title')) ?></h2>
             <p class="section-subtitle"><?= e(__('process_subtitle')) ?></p>
         </div>
-        <div class="process-timeline">
+        <div class="process-v2">
             <?php foreach ($processSteps as $i => $step): ?>
-            <article class="process-step fx-border-glow" data-wave-anchor>
-                <div class="process-step__num"><?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?></div>
-                <div class="process-step__icon">
-                    <?php if ($step['icon'] === 'message'): ?>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                    <?php elseif ($step['icon'] === 'layout'): ?>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-                    <?php elseif ($step['icon'] === 'code'): ?>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                    <?php elseif ($step['icon'] === 'rocket'): ?>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
-                    <?php else: ?>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-                    <?php endif; ?>
+            <article class="process-v2__step fx-border-glow" data-wave-anchor>
+                <div class="process-v2__marker">
+                    <span class="process-v2__num"><?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?></span>
+                    <?php if ($i < count($processSteps) - 1): ?><span class="process-v2__line" aria-hidden="true"></span><?php endif; ?>
                 </div>
-                <h3><?= e(__($step['title'])) ?></h3>
-                <p><?= e(__($step['desc'])) ?></p>
+                <div class="process-v2__card">
+                    <div class="process-v2__icon">
+                        <?php if ($step['icon'] === 'message'): ?>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        <?php elseif ($step['icon'] === 'layout'): ?>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                        <?php elseif ($step['icon'] === 'code'): ?>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                        <?php elseif ($step['icon'] === 'rocket'): ?>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
+                        <?php else: ?>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                        <?php endif; ?>
+                    </div>
+                    <h3><?= e(__($step['title'])) ?></h3>
+                    <p><?= e(__($step['desc'])) ?></p>
+                </div>
             </article>
             <?php endforeach; ?>
         </div>
@@ -459,16 +465,16 @@ $aboutFeatures = [
     </div>
 </section>
 
-<section class="contact section fx-section" id="contact">
+<section class="contact section fx-section contact--v2" id="contact">
     <div class="fx-grid-bg" aria-hidden="true"></div>
-    <div class="container contact-grid">
-        <div class="contact-info" data-wave-anchor>
+    <div class="container contact-v2">
+        <div class="contact-v2__info" data-wave-anchor>
             <span class="section-label"><?= e(__('contact_label')) ?></span>
             <h2 class="section-title"><?= e(__('contact_title')) ?></h2>
-            <p><?= e(__('contact_subtitle')) ?></p>
-            <div class="contact-details">
-                <div class="contact-detail">
-                    <div class="contact-detail__icon">
+            <p class="contact-v2__lead"><?= e(__('contact_subtitle')) ?></p>
+            <div class="contact-v2__cards">
+                <div class="contact-v2__card fx-border-glow">
+                    <div class="contact-v2__card-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                     </div>
                     <div>
@@ -476,8 +482,8 @@ $aboutFeatures = [
                         <a href="mailto:plescagheorghe07@gmail.com">plescagheorghe07@gmail.com</a>
                     </div>
                 </div>
-                <div class="contact-detail">
-                    <div class="contact-detail__icon">
+                <div class="contact-v2__card fx-border-glow">
+                    <div class="contact-v2__card-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                     </div>
                     <div>
@@ -485,8 +491,8 @@ $aboutFeatures = [
                         <span><?= e(__('contact_location')) ?></span>
                     </div>
                 </div>
-                <div class="contact-detail">
-                    <div class="contact-detail__icon">
+                <div class="contact-v2__card fx-border-glow">
+                    <div class="contact-v2__card-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                     </div>
                     <div>
@@ -495,9 +501,17 @@ $aboutFeatures = [
                     </div>
                 </div>
             </div>
+            <div class="contact-v2__badges">
+                <span class="contact-v2__badge">PHP · Full Stack</span>
+                <span class="contact-v2__badge">React · Next.js</span>
+                <span class="contact-v2__badge">SEO · Schema.org</span>
+            </div>
         </div>
-        <form class="contact-form fx-border-glow" id="contactForm" action="<?= api_href('api/contact.php') ?>" method="POST" data-wave-anchor>
-            <h3 class="contact-form__title"><?= e(__('contact_form_title')) ?></h3>
+        <form class="contact-form contact-form--v2 fx-border-glow" id="contactForm" action="<?= api_href('api/contact.php') ?>" method="POST" data-wave-anchor>
+            <div class="contact-form__header">
+                <h3 class="contact-form__title"><?= e(__('contact_form_title')) ?></h3>
+                <p class="contact-form__sub"><?= e(__('contact_subtitle')) ?></p>
+            </div>
             <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
             <div class="form-row">
                 <div class="form-group">
@@ -524,7 +538,7 @@ $aboutFeatures = [
                 <textarea id="message" name="message" rows="5" required maxlength="5000" placeholder="<?= e(__('contact_message')) ?>"></textarea>
             </div>
             <div class="form-feedback" id="formFeedback"></div>
-            <button type="submit" class="btn btn--primary btn--lg">
+            <button type="submit" class="btn btn--primary btn--lg contact-form__submit">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                 <?= e(__('contact_send')) ?>
             </button>

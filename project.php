@@ -57,33 +57,29 @@ $primaryTag = $tags[0] ?? 'Web';
 require __DIR__ . '/partials/header.php';
 ?>
 
-<div class="project-page">
-<section class="project-hero project-hero--fx section">
+<div class="project-page project-page--v2">
+<section class="project-hero project-hero--v2 section">
     <div class="fx-grid-bg" aria-hidden="true"></div>
     <div class="container">
-        <a href="<?= home_href() ?>#projects" class="back-link">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            <?= e(__('project_back')) ?>
-        </a>
-        <div class="project-hero__layout">
-            <div class="project-hero__content">
-                <span class="section-label"><?= e(__('projects_label')) ?></span>
+        <nav class="project-breadcrumb" aria-label="Breadcrumb">
+            <a href="<?= home_href() ?>" class="project-breadcrumb__link">Visio</a>
+            <span class="project-breadcrumb__sep">/</span>
+            <a href="<?= home_href() ?>#projects" class="project-breadcrumb__link"><?= e(__('nav_projects')) ?></a>
+            <span class="project-breadcrumb__sep">/</span>
+            <span class="project-breadcrumb__current"><?= e($title) ?></span>
+        </nav>
+
+        <div class="project-hero__grid">
+            <div class="project-hero__main">
+                <div class="project-hero__tags">
+                    <span class="project-hero__tag project-hero__tag--primary"><?= e($primaryTag) ?></span>
+                    <?php if (!empty($project['website_link'])): ?>
+                    <span class="project-hero__tag project-hero__tag--live">Live</span>
+                    <?php endif; ?>
+                </div>
                 <h1 class="project-hero-title"><?= e($title) ?></h1>
                 <p class="project-hero-desc"><?= e($description) ?></p>
-                <div class="project-hero-meta">
-                    <span class="project-meta-card">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-                        <span><strong><?= e(__('project_category')) ?>:</strong> <?= e($primaryTag) ?></span>
-                    </span>
-                    <span class="project-meta-card">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                        <span><strong><?= count($tags) ?></strong> <?= e(__('project_tech_count')) ?></span>
-                    </span>
-                    <span class="project-meta-card">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        <span>Visio · Moldova</span>
-                    </span>
-                </div>
+
                 <div class="project-hero-actions">
                     <?php if (!empty($project['website_link'])): ?>
                     <a href="<?= e($project['website_link']) ?>" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--lg">
@@ -97,84 +93,82 @@ require __DIR__ . '/partials/header.php';
                         <?= e(__('project_github')) ?>
                     </a>
                     <?php endif; ?>
-                </div>
-                <div class="project-stats-bar">
-                    <div class="project-stat fx-border-glow">
-                        <div class="project-stat__val"><?= count($tags) ?>+</div>
-                        <div class="project-stat__lbl"><?= e(__('project_tech_count')) ?></div>
-                    </div>
-                    <div class="project-stat fx-border-glow">
-                        <div class="project-stat__val">100%</div>
-                        <div class="project-stat__lbl"><?= e(__('project_responsive')) ?></div>
-                    </div>
-                    <div class="project-stat fx-border-glow">
-                        <div class="project-stat__val">SEO</div>
-                        <div class="project-stat__lbl"><?= e(__('project_optimized')) ?></div>
-                    </div>
+                    <a href="<?= home_href() ?>#contact" class="btn btn--outline btn--lg">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        <?= e(__('hero_cta_contact')) ?>
+                    </a>
                 </div>
             </div>
-            <div class="project-hero__cover fx-border-glow">
-                <img src="<?= e($coverSrc) ?>" alt="<?= e($title) ?> — Visio Moldova" loading="eager"
-                     onerror="this.src='<?= brand_logo_href() ?>'">
-                <div class="project-hero__cover-glow"></div>
-            </div>
+
+            <aside class="project-hero__aside fx-border-glow">
+                <div class="project-hero__cover">
+                    <img src="<?= e($coverSrc) ?>" alt="<?= e($title) ?> — Visio Moldova" loading="eager"
+                         onerror="this.src='<?= brand_logo_href() ?>'">
+                    <div class="project-hero__cover-shine"></div>
+                </div>
+                <div class="project-aside-stats">
+                    <div class="project-aside-stat">
+                        <span class="project-aside-stat__val"><?= count($tags) ?>+</span>
+                        <span class="project-aside-stat__lbl"><?= e(__('project_tech_count')) ?></span>
+                    </div>
+                    <div class="project-aside-stat">
+                        <span class="project-aside-stat__val">100%</span>
+                        <span class="project-aside-stat__lbl"><?= e(__('project_responsive')) ?></span>
+                    </div>
+                    <div class="project-aside-stat">
+                        <span class="project-aside-stat__val">SEO</span>
+                        <span class="project-aside-stat__lbl"><?= e(__('project_optimized')) ?></span>
+                    </div>
+                </div>
+                <div class="project-aside-meta">
+                    <div class="project-aside-meta__row">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                        <span><?= e($primaryTag) ?></span>
+                    </div>
+                    <div class="project-aside-meta__row">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <span>Visio · Chișinău, Moldova</span>
+                    </div>
+                </div>
+            </aside>
         </div>
     </div>
 </section>
 
 <?php if ($galleryItems): ?>
-<section class="project-gallery project-gallery--fx section">
+<section class="project-gallery project-gallery--v2 section">
     <div class="container">
         <div class="section-header section-header--fx">
             <span class="section-label"><?= e(__('project_gallery')) ?></span>
             <h2 class="section-title section-title--sm"><?= e(__('project_gallery_title')) ?></h2>
+            <p class="section-subtitle"><?= count($galleryItems) ?> <?= e(__('project_gallery')) ?></p>
         </div>
-        <div class="gallery-grid" id="projectGallery">
+        <div class="gallery-grid gallery-grid--v2" id="projectGallery">
             <?php foreach ($galleryItems as $i => $item): ?>
-            <button type="button" class="gallery-item fx-border-glow" data-lightbox-index="<?= $i ?>" aria-label="<?= e($item['alt']) ?>">
+            <button type="button" class="gallery-item gallery-item--v2<?= $i === 0 ? ' gallery-item--featured' : '' ?>" data-lightbox-index="<?= $i ?>" aria-label="<?= e($item['alt']) ?>">
                 <img src="<?= e($item['src']) ?>" alt="<?= e($item['alt']) ?>" loading="lazy"
                      onerror="this.src='<?= brand_logo_href() ?>'">
-                <span class="gallery-zoom" aria-hidden="true">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                <span class="gallery-item__overlay">
+                    <span class="gallery-zoom">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                        <?= e(__('project_view')) ?>
+                    </span>
                 </span>
             </button>
             <?php endforeach; ?>
         </div>
     </div>
 </section>
-
-<div class="lightbox" id="lightbox" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Galerie imagini">
-    <div class="lightbox-backdrop" data-lightbox-close></div>
-    <div class="lightbox-inner">
-        <button type="button" class="lightbox-close" data-lightbox-close aria-label="Închide">&times;</button>
-        <?php if (count($galleryItems) > 1): ?>
-        <button type="button" class="lightbox-arrow lightbox-prev" data-lightbox-prev aria-label="Imaginea anterioară">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-        </button>
-        <button type="button" class="lightbox-arrow lightbox-next" data-lightbox-next aria-label="Imaginea următoare">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-        </button>
-        <?php endif; ?>
-        <figure class="lightbox-figure">
-            <img id="lightboxImage" src="" alt="">
-            <figcaption id="lightboxCaption"></figcaption>
-        </figure>
-        <?php if (count($galleryItems) > 1): ?>
-        <div class="lightbox-counter" id="lightboxCounter"></div>
-        <?php endif; ?>
-    </div>
-</div>
-<script type="application/json" id="lightboxData"><?= json_encode($galleryItems, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
 <?php endif; ?>
 
 <?php if ($tags): ?>
-<section class="project-tech project-tech--fx section">
+<section class="project-tech project-tech--v2 section">
     <div class="container">
         <div class="section-header section-header--fx">
             <span class="section-label"><?= e(__('project_tech_stack')) ?></span>
             <h2 class="section-title section-title--sm"><?= e(__('project_tech_title')) ?></h2>
         </div>
-        <div class="tech-tags">
+        <div class="tech-tags tech-tags--v2">
             <?php foreach ($tags as $tag): ?>
             <span class="tag tag--lg"><?= e($tag) ?></span>
             <?php endforeach; ?>
@@ -194,9 +188,12 @@ require __DIR__ . '/partials/header.php';
     </div>
 </section>
 
-<section class="project-cta project-cta--fx section">
+<section class="project-cta project-cta--v2 section">
     <div class="container">
         <div class="project-cta__box fx-border-glow">
+            <div class="project-cta__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
             <h2><?= e(__('project_cta_title')) ?></h2>
             <p><?= e(__('project_cta_desc')) ?></p>
             <a href="<?= home_href() ?>#contact" class="btn btn--primary btn--lg">
@@ -207,5 +204,32 @@ require __DIR__ . '/partials/header.php';
     </div>
 </section>
 </div>
+
+<?php if ($galleryItems): ?>
+<div class="lightbox lightbox--v2" id="lightbox" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Galerie imagini">
+    <div class="lightbox-backdrop" data-lightbox-close></div>
+    <div class="lightbox-inner">
+        <div class="lightbox-toolbar">
+            <div class="lightbox-counter" id="lightboxCounter"></div>
+            <button type="button" class="lightbox-close" data-lightbox-close aria-label="Închide">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <?php if (count($galleryItems) > 1): ?>
+        <button type="button" class="lightbox-arrow lightbox-prev" data-lightbox-prev aria-label="Imaginea anterioară">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button type="button" class="lightbox-arrow lightbox-next" data-lightbox-next aria-label="Imaginea următoare">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+        <?php endif; ?>
+        <figure class="lightbox-figure">
+            <img id="lightboxImage" src="" alt="">
+            <figcaption id="lightboxCaption"></figcaption>
+        </figure>
+    </div>
+</div>
+<script type="application/json" id="lightboxData"><?= json_encode($galleryItems, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
+<?php endif; ?>
 
 <?php require __DIR__ . '/partials/footer.php'; ?>

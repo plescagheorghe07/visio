@@ -55,7 +55,7 @@
             });
         });
 
-        gsap.utils.toArray('.process-step').forEach(function (step, i) {
+        gsap.utils.toArray('.process-v2__step').forEach(function (step, i) {
             gsap.from(step, {
                 scrollTrigger: { trigger: step, start: 'top 90%' },
                 opacity: 0, y: 40, duration: 0.65, delay: i * 0.08, ease: 'power3.out',
@@ -69,7 +69,7 @@
             });
         });
 
-        gsap.utils.toArray('.project-stat').forEach(function (stat, i) {
+        gsap.utils.toArray('.project-aside-stat, .project-stat').forEach(function (stat, i) {
             gsap.from(stat, {
                 scrollTrigger: { trigger: stat, start: 'top 90%' },
                 opacity: 0, scale: 0.9, duration: 0.5, delay: i * 0.1, ease: 'back.out(2)',
@@ -96,7 +96,8 @@
 
         gsap.from('.about-spotlight', { scrollTrigger: { trigger: '.about-body', start: 'top 80%' }, opacity: 0, x: -40, duration: 0.9, ease: 'power3.out' });
         gsap.from('.about-copy', { scrollTrigger: { trigger: '.about-body', start: 'top 80%' }, opacity: 0, x: 40, duration: 0.9, ease: 'power3.out' });
-        gsap.from('.contact-form', { scrollTrigger: { trigger: '.contact-grid', start: 'top 78%' }, opacity: 0, y: 40, duration: 0.8, ease: 'power3.out' });
+        gsap.from('.contact-v2__info', { scrollTrigger: { trigger: '.contact-v2', start: 'top 78%' }, opacity: 0, x: -40, duration: 0.8, ease: 'power3.out' });
+        gsap.from('.contact-form--v2', { scrollTrigger: { trigger: '.contact-v2', start: 'top 78%' }, opacity: 0, y: 40, duration: 0.8, ease: 'power3.out' });
 
         document.querySelectorAll('.stat-card[data-count]').forEach(function (card) {
             var target = parseInt(card.dataset.count, 10);
@@ -429,10 +430,10 @@
     function initProjectHero() {
         var title = document.querySelector('.project-hero-title');
         if (!title || typeof gsap === 'undefined') return;
-        gsap.from('.project-hero__cover', { opacity: 0, x: 40, duration: 1, ease: 'power3.out' });
-        gsap.from('.project-hero__content', { opacity: 0, x: -30, duration: 0.9, ease: 'power3.out' });
+        gsap.from('.project-hero__aside', { opacity: 0, x: 40, duration: 1, ease: 'power3.out' });
+        gsap.from('.project-hero__main', { opacity: 0, x: -30, duration: 0.9, ease: 'power3.out' });
         gsap.from('.project-hero-title', { opacity: 0, y: 40, duration: 0.9, ease: 'power3.out' });
         gsap.from('.project-hero-desc', { opacity: 0, y: 24, duration: 0.8, delay: 0.15, ease: 'power3.out' });
-        gsap.from('.gallery-item', { opacity: 0, y: 30, duration: 0.6, stagger: 0.08, delay: 0.2, ease: 'power2.out' });
+        gsap.from('.gallery-item--v2', { opacity: 0, y: 30, duration: 0.6, stagger: 0.08, delay: 0.2, ease: 'power2.out' });
     }
 })();
