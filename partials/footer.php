@@ -79,9 +79,6 @@
                         'fullstack', 'php', 'react', 'nextjs', 'seo', 'design', 'software', 'webdesign',
                         'aplicatiweb', 'platforme', 'it', 'tech', 'startup', 'crearewebsite', 'agentieweb',
                         'developer', 'mysql', 'postgresql', 'gsap', 'uiux', 'enterprise', 'edtech', 'fintech',
-                        'crearesite', 'dezvoltatorweb', 'agentiesoftware', 'platformasaas', 'aplicatiemobila',
-                        'magazinonline', 'portalsite', 'optimizareseo', 'designmodern', 'fullstackdeveloper',
-                        'programarechisinau', 'itmoldova', 'webdeveloper', 'softwaremoldova', 'hosting',
                     ];
                     foreach ($seoTags as $tag):
                     ?>
@@ -98,6 +95,9 @@
                 <a href="<?= home_href() ?>#about"><?= e(__('nav_about')) ?></a>
                 <a href="<?= home_href() ?>#services"><?= e(__('nav_services')) ?></a>
                 <a href="<?= home_href() ?>#projects"><?= e(__('nav_projects')) ?></a>
+                <a href="<?= home_href() ?>#process"><?= e(__('nav_process')) ?></a>
+                <a href="<?= home_href() ?>#faq"><?= e(__('nav_faq')) ?></a>
+                <a href="<?= home_href() ?>#contact"><?= e(__('nav_contact')) ?></a>
             </nav>
         </div>
     </footer>

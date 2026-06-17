@@ -15,6 +15,32 @@ $pageDescription = __('meta_description');
 $pageKeywords = __('meta_keywords');
 $canonicalUrl = home_url($lang);
 
+$processSteps = [
+    ['icon' => 'message', 'title' => 'process_s1_title', 'desc' => 'process_s1_desc'],
+    ['icon' => 'layout', 'title' => 'process_s2_title', 'desc' => 'process_s2_desc'],
+    ['icon' => 'code', 'title' => 'process_s3_title', 'desc' => 'process_s3_desc'],
+    ['icon' => 'rocket', 'title' => 'process_s4_title', 'desc' => 'process_s4_desc'],
+    ['icon' => 'chart', 'title' => 'process_s5_title', 'desc' => 'process_s5_desc'],
+];
+$faqItems = [
+    ['q' => 'faq_q1', 'a' => 'faq_a1'],
+    ['q' => 'faq_q2', 'a' => 'faq_a2'],
+    ['q' => 'faq_q3', 'a' => 'faq_a3'],
+    ['q' => 'faq_q4', 'a' => 'faq_a4'],
+    ['q' => 'faq_q5', 'a' => 'faq_a5'],
+    ['q' => 'faq_q6', 'a' => 'faq_a6'],
+];
+$faqSchemaEntities = array_map(static fn(array $item): array => [
+    '@type' => 'Question',
+    'name' => __($item['q']),
+    'acceptedAnswer' => ['@type' => 'Answer', 'text' => __($item['a'])],
+], $faqItems);
+$extraSchema = json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'FAQPage',
+    'mainEntity' => $faqSchemaEntities,
+], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
 require __DIR__ . '/partials/header.php';
 
 $techStack = ['PHP', 'React', 'Next.js', 'MySQL', 'PostgreSQL', 'GSAP', 'Node.js', 'TypeScript', 'Tailwind CSS', 'Docker', 'REST API', 'SEO', 'SaaS', 'GraphQL', 'Redis', 'Vercel'];
@@ -60,136 +86,73 @@ $aboutFeatures = [
     ['icon' => 'sparkles', 'title' => 'about_feat3_title', 'desc' => 'about_feat3_desc'],
     ['icon' => 'layers', 'title' => 'about_feat4_title', 'desc' => 'about_feat4_desc'],
 ];
-
-$processSteps = [
-    ['icon' => 'discover', 'title' => 'process_1_title', 'desc' => 'process_1_desc'],
-    ['icon' => 'design', 'title' => 'process_2_title', 'desc' => 'process_2_desc'],
-    ['icon' => 'build', 'title' => 'process_3_title', 'desc' => 'process_3_desc'],
-    ['icon' => 'launch', 'title' => 'process_4_title', 'desc' => 'process_4_desc'],
-];
-
-$faqItems = [
-    ['q' => 'faq_1_q', 'a' => 'faq_1_a'],
-    ['q' => 'faq_2_q', 'a' => 'faq_2_a'],
-    ['q' => 'faq_3_q', 'a' => 'faq_3_a'],
-    ['q' => 'faq_4_q', 'a' => 'faq_4_a'],
-    ['q' => 'faq_5_q', 'a' => 'faq_5_a'],
-];
-
-$trustItems = ['trust_1', 'trust_2', 'trust_3', 'trust_4', 'trust_5'];
 ?>
 
-<section class="hero" id="home">
+<section class="hero fx-section" id="home">
     <div class="hero-bg">
+        <div class="hero-mesh"></div>
+        <div class="hero-noise"></div>
+        <div class="fx-scanline"></div>
         <div class="hero-orb hero-orb--1"></div>
         <div class="hero-orb hero-orb--2"></div>
         <div class="hero-orb hero-orb--3"></div>
         <div class="hero-grid"></div>
-        <div class="fx-grid-bg"></div>
+        <div class="hero-ring hero-ring--1" aria-hidden="true"></div>
+        <div class="hero-ring hero-ring--2" aria-hidden="true"></div>
     </div>
-    <div class="container hero-layout">
-        <div class="hero-content">
-            <div class="hero-meta" data-wave-anchor>
-                <span class="badge hero-badge">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                    <?= e(__('hero_badge')) ?>
-                </span>
-                <span class="hero-status">
-                    <span class="hero-status__dot"></span>
-                    <?= e(__('hero_status')) ?>
-                </span>
-            </div>
-            <h1 class="hero-title">
-                <span class="hero-line"><?= e(__('hero_title')) ?></span>
-                <span class="hero-line hero-line--accent"><?= e(__('hero_title_accent')) ?></span>
-            </h1>
-            <p class="hero-subtitle"><?= e(__('hero_subtitle')) ?></p>
-            <div class="hero-actions">
-                <a href="#projects" class="btn btn--primary btn--lg">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                    <?= e(__('hero_cta_projects')) ?>
-                </a>
-                <a href="#contact" class="btn btn--outline btn--lg">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                    <?= e(__('hero_cta_contact')) ?>
-                </a>
-            </div>
-            <div class="hero-quicklinks">
-                <a href="#about" class="hero-quicklink" data-wave-anchor>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
-                    <?= e(__('nav_about')) ?>
-                </a>
-                <a href="#services" class="hero-quicklink" data-wave-anchor>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-                    <?= e(__('nav_services')) ?>
-                </a>
-                <a href="#projects" class="hero-quicklink" data-wave-anchor>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-                    <?= e(__('nav_projects')) ?>
-                </a>
-            </div>
+    <div class="container hero-content">
+        <div class="hero-meta" data-wave-anchor>
+            <span class="badge hero-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <?= e(__('hero_badge')) ?>
+            </span>
+            <span class="hero-status">
+                <span class="hero-status__dot"></span>
+                <?= e(__('hero_status')) ?>
+            </span>
         </div>
-        <aside class="hero-panel" data-wave-anchor aria-label="<?= e(__('hero_panel_label')) ?>">
-            <div class="hero-glass">
-                <span class="fx-corner fx-corner--tl"></span>
-                <span class="fx-corner fx-corner--tr"></span>
-                <span class="fx-corner fx-corner--bl"></span>
-                <span class="fx-corner fx-corner--br"></span>
-                <div class="hero-glass__head">
-                    <div class="hero-glass__icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                    </div>
-                    <div>
-                        <strong>Visio SaaS Studio</strong>
-                        <span><?= e(__('hero_panel_sub')) ?></span>
-                    </div>
-                </div>
-                <div class="hero-glass__stats">
-                    <div class="hero-glass__stat">
-                        <span class="hero-glass__stat-num"><?= $projectCount ?>+</span>
-                        <span class="hero-glass__stat-label"><?= e(__('stats_projects')) ?></span>
-                    </div>
-                    <div class="hero-glass__stat">
-                        <span class="hero-glass__stat-num"><?= max($tagCount, 15) ?>+</span>
-                        <span class="hero-glass__stat-label"><?= e(__('stats_technologies')) ?></span>
-                    </div>
-                    <div class="hero-glass__stat">
-                        <span class="hero-glass__stat-num">100%</span>
-                        <span class="hero-glass__stat-label"><?= e(__('stats_satisfaction')) ?></span>
-                    </div>
-                </div>
-            </div>
-            <div class="hero-float">
-                <span class="hero-float__chip">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                    PHP · React · Next.js
-                </span>
-                <span class="hero-float__chip">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>
-                    SEO · Schema.org
-                </span>
-                <span class="hero-float__chip">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    Chișinău, Moldova
-                </span>
-            </div>
-        </aside>
+        <h1 class="hero-title">
+            <span class="hero-line"><?= e(__('hero_title')) ?></span>
+            <span class="hero-line hero-line--accent"><?= e(__('hero_title_accent')) ?></span>
+        </h1>
+        <p class="hero-subtitle"><?= e(__('hero_subtitle')) ?></p>
+        <div class="hero-actions">
+            <a href="#projects" class="btn btn--primary btn--lg">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                <?= e(__('hero_cta_projects')) ?>
+            </a>
+            <a href="#contact" class="btn btn--outline btn--lg">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <?= e(__('hero_cta_contact')) ?>
+            </a>
+        </div>
+        <div class="hero-quicklinks">
+            <a href="#about" class="hero-quicklink" data-wave-anchor>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+                <?= e(__('nav_about')) ?>
+            </a>
+            <a href="#services" class="hero-quicklink" data-wave-anchor>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                <?= e(__('nav_services')) ?>
+            </a>
+            <a href="#projects" class="hero-quicklink" data-wave-anchor>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                <?= e(__('nav_projects')) ?>
+            </a>
+            <a href="#process" class="hero-quicklink" data-wave-anchor>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <?= e(__('nav_process')) ?>
+            </a>
+            <a href="#faq" class="hero-quicklink" data-wave-anchor>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <?= e(__('nav_faq')) ?>
+            </a>
+        </div>
     </div>
     <div class="hero-scroll">
         <span class="scroll-indicator"></span>
     </div>
 </section>
-
-<div class="trust-bar" aria-label="<?= e(__('trust_label')) ?>">
-    <div class="container trust-bar__grid">
-        <?php foreach ($trustItems as $key): ?>
-        <div class="trust-bar__item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            <?= e(__($key)) ?>
-        </div>
-        <?php endforeach; ?>
-    </div>
-</div>
 
 <section class="stats section">
     <div class="container stats-grid">
@@ -231,7 +194,8 @@ $trustItems = ['trust_1', 'trust_2', 'trust_3', 'trust_4', 'trust_5'];
     </div>
 </section>
 
-<section class="about section" id="about">
+<section class="about section fx-section" id="about">
+    <div class="fx-grid-bg" aria-hidden="true"></div>
     <div class="container">
         <div class="about-grid">
             <div class="about-visual" data-wave-anchor>
@@ -266,7 +230,7 @@ $trustItems = ['trust_1', 'trust_2', 'trust_3', 'trust_4', 'trust_5'];
         </div>
         <div class="about-features">
             <?php foreach ($aboutFeatures as $feat): ?>
-            <article class="about-feature" data-wave-anchor>
+            <article class="about-feature fx-border-glow" data-wave-anchor>
                 <div class="about-feature__icon about-feature__icon--<?= e($feat['icon']) ?>">
                     <?php if ($feat['icon'] === 'zap'): ?>
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
@@ -286,16 +250,17 @@ $trustItems = ['trust_1', 'trust_2', 'trust_3', 'trust_4', 'trust_5'];
     </div>
 </section>
 
-<section class="services section" id="services">
+<section class="services section fx-section" id="services">
+    <div class="fx-grid-bg" aria-hidden="true"></div>
     <div class="container">
-        <div class="section-header">
+        <div class="section-header section-header--fx">
             <span class="section-label" data-wave-anchor><?= e(__('services_label')) ?></span>
             <h2 class="section-title"><?= e(__('services_title')) ?></h2>
             <p class="section-subtitle"><?= e(__('services_subtitle')) ?></p>
         </div>
         <div class="services-grid">
             <?php foreach ($services as $svc): ?>
-            <article class="service-card" data-wave-anchor>
+            <article class="service-card fx-border-glow" data-wave-anchor>
                 <div class="service-card__head">
                     <span class="service-num"><?= $svc['num'] ?></span>
                     <div class="service-icon service-icon--<?= e($svc['icon']) ?>">
@@ -335,9 +300,10 @@ $trustItems = ['trust_1', 'trust_2', 'trust_3', 'trust_4', 'trust_5'];
     </div>
 </section>
 
-<section class="projects section" id="projects">
+<section class="projects section fx-section" id="projects">
+    <div class="fx-grid-bg" aria-hidden="true"></div>
     <div class="container">
-        <div class="section-header">
+        <div class="section-header section-header--fx">
             <span class="section-label" data-wave-anchor><?= e(__('projects_label')) ?></span>
             <h2 class="section-title"><?= e(__('projects_title')) ?></h2>
             <p class="section-subtitle"><?= e(__('projects_subtitle')) ?></p>
@@ -352,7 +318,7 @@ $trustItems = ['trust_1', 'trust_2', 'trust_3', 'trust_4', 'trust_5'];
                 $primaryTag = $tags[0] ?? 'Web';
                 $num = str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT);
             ?>
-            <article class="project-card" data-wave-anchor>
+            <article class="project-card fx-border-glow" data-wave-anchor>
                 <a href="<?= project_href($project['slug']) ?>" class="project-card-link">
                     <div class="project-card__top">
                         <span class="project-card__index"><?= $num ?></span>
@@ -392,26 +358,28 @@ $trustItems = ['trust_1', 'trust_2', 'trust_3', 'trust_4', 'trust_5'];
     </div>
 </section>
 
-<section class="process section" id="process">
+<section class="process section fx-section" id="process">
     <div class="container">
-        <div class="section-header section-header--center">
+        <div class="section-header section-header--fx">
             <span class="section-label" data-wave-anchor><?= e(__('process_label')) ?></span>
             <h2 class="section-title"><?= e(__('process_title')) ?></h2>
-            <p class="section-subtitle section-subtitle--center"><?= e(__('process_subtitle')) ?></p>
+            <p class="section-subtitle"><?= e(__('process_subtitle')) ?></p>
         </div>
-        <div class="process-grid">
+        <div class="process-timeline">
             <?php foreach ($processSteps as $i => $step): ?>
-            <article class="process-step" data-wave-anchor>
-                <span class="process-step__num"><?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?></span>
+            <article class="process-step fx-border-glow" data-wave-anchor>
+                <div class="process-step__num"><?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?></div>
                 <div class="process-step__icon">
-                    <?php if ($step['icon'] === 'discover'): ?>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                    <?php elseif ($step['icon'] === 'design'): ?>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>
-                    <?php elseif ($step['icon'] === 'build'): ?>
+                    <?php if ($step['icon'] === 'message'): ?>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <?php elseif ($step['icon'] === 'layout'): ?>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                    <?php elseif ($step['icon'] === 'code'): ?>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                    <?php else: ?>
+                    <?php elseif ($step['icon'] === 'rocket'): ?>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
+                    <?php else: ?>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
                     <?php endif; ?>
                 </div>
                 <h3><?= e(__($step['title'])) ?></h3>
@@ -422,43 +390,40 @@ $trustItems = ['trust_1', 'trust_2', 'trust_3', 'trust_4', 'trust_5'];
     </div>
 </section>
 
-<section class="faq section" id="faq">
-    <div class="container">
-        <div class="section-header section-header--center">
-            <span class="section-label" data-wave-anchor><?= e(__('faq_label')) ?></span>
+<section class="faq section fx-section" id="faq">
+    <div class="container faq-grid">
+        <div class="faq-intro" data-wave-anchor>
+            <span class="section-label"><?= e(__('faq_label')) ?></span>
             <h2 class="section-title"><?= e(__('faq_title')) ?></h2>
-            <p class="section-subtitle section-subtitle--center"><?= e(__('faq_subtitle')) ?></p>
+            <p class="section-subtitle"><?= e(__('faq_subtitle')) ?></p>
+            <div class="faq-tags">
+                <span class="faq-tag">#dezvoltare</span>
+                <span class="faq-tag">#saas</span>
+                <span class="faq-tag">#moldova</span>
+                <span class="faq-tag">#seo</span>
+                <span class="faq-tag">#webapp</span>
+            </div>
         </div>
-        <div class="faq-list">
-            <?php foreach ($faqItems as $faq): ?>
-            <details class="faq-item">
-                <summary><?= e(__($faq['q'])) ?></summary>
-                <div class="faq-item__body"><?= e(__($faq['a'])) ?></div>
-            </details>
+        <div class="faq-list" id="faqList">
+            <?php foreach ($faqItems as $i => $item): ?>
+            <article class="faq-item<?= $i === 0 ? ' is-open' : '' ?>">
+                <button type="button" class="faq-item__trigger" aria-expanded="<?= $i === 0 ? 'true' : 'false' ?>">
+                    <span><?= e(__($item['q'])) ?></span>
+                    <span class="faq-item__icon" aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </span>
+                </button>
+                <div class="faq-item__body">
+                    <p class="faq-item__answer"><?= e(__($item['a'])) ?></p>
+                </div>
+            </article>
             <?php endforeach; ?>
         </div>
     </div>
 </section>
 
-<?php
-$faqSchema = [
-    '@context' => 'https://schema.org',
-    '@type' => 'FAQPage',
-    'mainEntity' => array_map(static function (array $faq): array {
-        return [
-            '@type' => 'Question',
-            'name' => __($faq['q']),
-            'acceptedAnswer' => [
-                '@type' => 'Answer',
-                'text' => __($faq['a']),
-            ],
-        ];
-    }, $faqItems),
-];
-?>
-<script type="application/ld+json"><?= json_encode($faqSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
-
-<section class="contact section" id="contact">
+<section class="contact section fx-section" id="contact">
+    <div class="fx-grid-bg" aria-hidden="true"></div>
     <div class="container contact-grid">
         <div class="contact-info" data-wave-anchor>
             <span class="section-label"><?= e(__('contact_label')) ?></span>
@@ -494,7 +459,7 @@ $faqSchema = [
                 </div>
             </div>
         </div>
-        <form class="contact-form" id="contactForm" action="<?= api_href('api/contact.php') ?>" method="POST" data-wave-anchor>
+        <form class="contact-form fx-border-glow" id="contactForm" action="<?= api_href('api/contact.php') ?>" method="POST" data-wave-anchor>
             <h3 class="contact-form__title"><?= e(__('contact_form_title')) ?></h3>
             <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
             <div class="form-row">

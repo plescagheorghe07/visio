@@ -54,7 +54,7 @@ $navHash = function (string $section) use ($isHomePage): string {
     })();
     </script>
     <style>
-        html, body { background-color: #f4f6fb; color-scheme: light; }
+        html, body { background-color: #f8f9fc; color-scheme: light; }
         html[data-theme="dark"], html[data-theme="dark"] body { background-color: #0a0a0f; color-scheme: dark; }
     </style>
     <title><?= e($pageTitle) ?></title>
@@ -90,7 +90,7 @@ $navHash = function (string $section) use ($isHomePage): string {
     <meta name="twitter:image:alt" content="Visio">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= e(asset_url('css/main.css')) ?>">
     <link rel="stylesheet" href="<?= e(asset_url('css/v2.css')) ?>">
     <script type="application/ld+json"><?= organization_schema_json() ?></script>
@@ -98,7 +98,7 @@ $navHash = function (string $section) use ($isHomePage): string {
     <script type="application/ld+json"><?= $extraSchema ?></script>
     <?php endif; ?>
 </head>
-<body class="<?= $isHomePage ? 'page-home' : 'page-inner' ?>">
+<body>
     <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
     <div class="cursor-glow" aria-hidden="true"></div>
     <canvas id="particles" class="particles-canvas" aria-hidden="true"></canvas>
@@ -117,6 +117,8 @@ $navHash = function (string $section) use ($isHomePage): string {
                     <li><a href="<?= e($navHash('about')) ?>" class="nav-link" data-section="about"><?= e(__('nav_about')) ?></a></li>
                     <li><a href="<?= e($navHash('services')) ?>" class="nav-link" data-section="services"><?= e(__('nav_services')) ?></a></li>
                     <li><a href="<?= e($navHash('projects')) ?>" class="nav-link" data-section="projects"><?= e(__('nav_projects')) ?></a></li>
+                    <li><a href="<?= e($navHash('process')) ?>" class="nav-link" data-section="process"><?= e(__('nav_process')) ?></a></li>
+                    <li><a href="<?= e($navHash('faq')) ?>" class="nav-link" data-section="faq"><?= e(__('nav_faq')) ?></a></li>
                     <li><a href="<?= e($navHash('contact')) ?>" class="nav-link nav-link--cta" data-section="contact"><?= e(__('nav_contact')) ?></a></li>
                 </ul>
             </nav>
