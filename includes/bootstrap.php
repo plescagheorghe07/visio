@@ -8,6 +8,7 @@ require_once __DIR__ . '/../core/ContactRepository.php';
 require_once __DIR__ . '/../core/UserRepository.php';
 require_once __DIR__ . '/../core/TranslationWriter.php';
 require_once __DIR__ . '/../core/AnalyticsRepository.php';
+require_once __DIR__ . '/../core/EmailTrackRepository.php';
 require_once __DIR__ . '/../includes/analytics.php';
 
 $config = require __DIR__ . '/../config/config.php';
@@ -62,6 +63,18 @@ function analytics_repo(): Visio\Core\AnalyticsRepository
     static $repo;
     $repo ??= new Visio\Core\AnalyticsRepository(db());
     return $repo;
+}
+
+function email_tracks_repo(): Visio\Core\EmailTrackRepository
+{
+    static $repo;
+    $repo ??= new Visio\Core\EmailTrackRepository(db());
+    return $repo;
+}
+
+function email_track_pixel_url(string $logId): string
+{
+    return base_url() . '/track-email?log_id=' . rawurlencode($logId);
 }
 
 function current_lang(): string

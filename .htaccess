@@ -58,6 +58,8 @@ RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
 
 RewriteRule ^api/contact/?$ api/contact.php [L,NC]
 
+RewriteRule ^track-email/?$ track-email.php [L,NC,QSA]
+
 
 
 # ── Homepage & limbi (prioritate — chiar dacă există foldere ro/en/ru) ──

@@ -32,6 +32,11 @@ if ($uri === '/api/contact' || $uri === '/api/contact.php') {
     return true;
 }
 
+if ($uri === '/track-email' || $uri === '/track-email.php') {
+    require $root . '/track-email.php';
+    return true;
+}
+
 // ── Sitemap ──────────────────────────────────────────────────
 if ($uri === '/sitemap.xml') {
     require $root . '/sitemap.php';

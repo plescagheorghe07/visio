@@ -382,6 +382,26 @@ INSERT INTO `analytics_visitors` (`id`, `visitor_hash`, `ip_address`, `country`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `email_tracks`
+--
+
+CREATE TABLE `email_tracks` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `log_id` varchar(64) NOT NULL,
+  `label` varchar(255) DEFAULT NULL,
+  `recipient_email` varchar(255) DEFAULT NULL,
+  `is_opened` tinyint(1) NOT NULL DEFAULT 0,
+  `open_count` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `first_opened_at` timestamp NULL DEFAULT NULL,
+  `last_opened_at` timestamp NULL DEFAULT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
+  `user_agent` varchar(500) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `contact_messages`
 --
 
@@ -599,6 +619,14 @@ ALTER TABLE `analytics_visitors`
   ADD KEY `idx_visitors_country` (`country`);
 
 --
+-- Indexes for table `email_tracks`
+--
+ALTER TABLE `email_tracks`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uq_email_tracks_log_id` (`log_id`),
+  ADD KEY `idx_email_tracks_opened` (`is_opened`,`created_at`);
+
+--
 -- Indexes for table `contact_messages`
 --
 ALTER TABLE `contact_messages`
@@ -651,6 +679,12 @@ ALTER TABLE `analytics_pageviews`
 --
 ALTER TABLE `analytics_visitors`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+
+--
+-- AUTO_INCREMENT for table `email_tracks`
+--
+ALTER TABLE `email_tracks`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `contact_messages`

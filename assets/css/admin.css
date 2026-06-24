@@ -204,6 +204,15 @@ a:hover { color: var(--admin-accent-hover); }
     border-radius: 100px;
     font-weight: 600;
 }
+.badge-opened {
+    background: #dcfce7;
+    color: #166534;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-weight: 600;
+}
+.track-meta-row td { border-top: none !important; padding-bottom: 12px !important; }
 
 .panel-header {
     display: flex;

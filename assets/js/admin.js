@@ -33,5 +33,37 @@
                 if (e.target === modal) modal.classList.add('hidden');
             });
         }
+
+        document.querySelectorAll('.copy-track').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var text = btn.dataset.copy || '';
+                if (!text) return;
+                var done = function () {
+                    var label = btn.textContent;
+                    btn.textContent = 'Copiat!';
+                    setTimeout(function () { btn.textContent = label; }, 1500);
+                };
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(done).catch(function () {
+                        fallbackCopy(text);
+                        done();
+                    });
+                } else {
+                    fallbackCopy(text);
+                    done();
+                }
+            });
+        });
+
+        function fallbackCopy(text) {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand('copy'); } catch (e) {}
+            document.body.removeChild(ta);
+        }
     });
 })();
